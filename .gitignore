@@ -1,0 +1,15 @@
+# just remove everything by default, require explicit inclusion
+*
+!*/
+
+# files
+!.gitignore
+!user-dirs.dirs
+!user-dirs.locale
+
+# directories
+!nvim/**/*
+!tmux/**/*
+!hypr/**/*
+!rofi/**/*
+!kitty/**/*
