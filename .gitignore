@@ -6,6 +6,7 @@
 !.gitignore
 !user-dirs.dirs
 !user-dirs.locale
+!electron-flags.conf
 
 # directories
 !nvim/**/*
