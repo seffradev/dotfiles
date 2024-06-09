@@ -1,0 +1,6 @@
+share/**/*
+
+# explicitly allow scripts these scripts to
+# protect the integrity of the private ones
+!bin/tmux-sessionizer
+!bin/cheatsheet
