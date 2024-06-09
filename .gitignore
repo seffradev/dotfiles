@@ -4,6 +4,7 @@
 !*/
 
 # files
+!setup
 !.gitignore
 !user-dirs.dirs
 !user-dirs.locale
