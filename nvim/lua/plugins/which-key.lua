@@ -122,11 +122,6 @@ return {
             l = {
                 name = "LSP",
             },
-            c = {
-                name = "Copilot",
-                p = { "<cmd>Copilot panel<cr>", "Toggle Copilot panel" },
-                n = { "<cmd>Copilot status<cr>", "Show Copilot status" },
-            },
             z = {
                 name = "Zen Mode",
                 m = { "<cmd>ZenMode<cr>", "Toggle zen mode" },
