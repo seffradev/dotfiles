@@ -58,6 +58,8 @@ return {
                 { desc = "Go to definition", buffer = bufnr, remap = false })
             vim.keymap.set("n", "gt", function() vim.lsp.buf.type_definition() end,
                 { desc = "Go to type definition", buffer = bufnr, remap = false })
+            vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end,
+                { desc = "Go to implementation", buffer = bufnr, remap = false })
             vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end,
                 { desc = "Show type information", buffer = bufnr, remap = false })
             vim.keymap.set("n", "<leader>lw", function() vim.lsp.buf.workspace_symbol() end,
