@@ -88,7 +88,15 @@ return {
         lsp.setup()
 
         require("lspconfig").lua_ls.setup({})
-        require("lspconfig").rust_analyzer.setup({})
+        require("lspconfig").rust_analyzer.setup({
+            settings = {
+                ['rust-analyzer'] = {
+                    check = {
+                        command = "clippy",
+                    }
+                }
+            }
+        })
         require("lspconfig").jdtls.setup({})
         require("lspconfig").tsserver.setup({})
         require("lspconfig").svelte.setup({})
