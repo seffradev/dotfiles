@@ -52,39 +52,6 @@ return {
             }),
         })
 
-        lsp.on_attach(function(client, bufnr)
-            vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "LSP info" })
-            vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end,
-                { desc = "Go to definition", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "gt", function() vim.lsp.buf.type_definition() end,
-                { desc = "Go to type definition", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end,
-                { desc = "Go to implementation", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end,
-                { desc = "Show type information", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>lw", function() vim.lsp.buf.workspace_symbol() end,
-                { desc = "Show workspace symbols", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>ld", function() vim.diagnostic.open_float() end,
-                { desc = "Open diagnostics", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>nd", function() vim.diagnostic.goto_next() end,
-                { desc = "Go to next diagnostic", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>pd", function() vim.diagnostic.goto_prev() end,
-                { desc = "Go to previous diagnostic", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>lc", function() vim.lsp.buf.code_action() end,
-                { desc = "Show available code actions", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>lR", function() vim.lsp.buf.references() end,
-                { desc = "Show references", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>lr", function() vim.lsp.buf.rename() end,
-                { desc = "Rename symbol", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>lsh", function() vim.lsp.buf.signature_help() end,
-                { desc = "Signature help", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>",
-                { desc = "Show Document Symbols", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>lS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-                { desc = "Show Workspace Symbols", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format document" })
-        end)
-
         lsp.setup()
 
         require("lspconfig").lua_ls.setup({})

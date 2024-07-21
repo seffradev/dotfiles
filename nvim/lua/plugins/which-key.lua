@@ -5,139 +5,97 @@ return {
         vim.o.timeout = true
         vim.o.timeoutlen = 300
     end,
+    keys = {
+        { "<leader>g",  group = "Git",                                                                     desc = "Git",                                          nowait = true, remap = false },
+        { "<leader>gs", "<cmd>Git<cr>",                                                                    desc = "Show git status",                              nowait = true, remap = false },
+        { "<leader>l",  group = "LSP",                                                                     desc = "LSP",                                          nowait = true, remap = false },
+        { "<leader>p",  group = "Project",                                                                 desc = "",                                             nowait = true, remap = false },
+        { "<leader>u",  "<cmd>UndotreeToggle<cr>",                                                         desc = "Toggle Undotree",                              nowait = true, remap = false },
+        { "<leader>w",  group = "Worktree",                                                                desc = "",                                             nowait = true, remap = false },
+        { "<leader>wc", "<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>", desc = "Create",                                       nowait = true, remap = false },
+        { "<leader>ws", "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",       desc = "Switch",                                       nowait = true, remap = false },
+        { "<leader>z",  group = "Zen Mode",                                                                desc = "",                                             nowait = true, remap = false },
+        { "<leader>zm", "<cmd>ZenMode<cr>",                                                                desc = "Toggle zen mode",                              nowait = true, remap = false },
+        { "<C-h>",      "<cmd> TmuxNavigateLeft<CR>",                                                      desc = "Go left in tmux",                              nowait = true, remap = false },
+        { "<C-l>",      "<cmd> TmuxNavigateRight<CR>",                                                     desc = "Go right in tmux",                             nowait = true, remap = false },
+        { "<C-j>",      "<cmd> TmuxNavigateDown<CR>",                                                      desc = "Go down in tmux",                              nowait = true, remap = false },
+        { "<C-k>",      "<cmd> TmuxNavigateUp<CR>",                                                        desc = "Go up in tmux",                                nowait = true, remap = false },
+        { "<leader>tx", "<cmd>Trouble diagnostics toggle<cr>",                                             desc = "Diagnostics (Trouble)",                        nowait = true, remap = false },
+        { "<leader>tX", "<cmd>Trouble diagnostics toggle filter.buf=1<cr>",                                desc = "Buffer Diagnostics (Trouble)",                 nowait = true, remap = false },
+        { "<leader>ts", "<cmd>Trouble symbols toggle focus=false<cr>",                                     desc = "Symbols (Trouble)",                            nowait = true, remap = false },
+        { "<leader>tl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",                      desc = "LSP Definitions / references / ... (Trouble)", nowait = true, remap = false },
+        { "<leader>tL", "<cmd>Trouble loclist toggle<cr>",                                                 desc = "Location List (Trouble)",                      nowait = true, remap = false },
+        { "<leader>tQ", "<cmd>Trouble qflist toggle<cr>",                                                  desc = "Quickfix List (Trouble)",                      nowait = true, remap = false },
+        { "<C-c>",      "<nop>",                                                                           desc = "",                                             nowait = true, remap = false },
+        { "<leader>pv", vim.cmd.Ex,                                                                        desc = "Show project view",                            nowait = true, remap = false },
+        { "J",          ":m '>+1<CR>gv=gv",                                                                desc = "Move line down",                               nowait = true, remap = false },
+        { "K",          ":m '<-2<CR>gv=gv",                                                                desc = "Move line up",                                 nowait = true, remap = false },
+        { "J",          "mzJ`z",                                                                           desc = "Join line below",                              nowait = true, remap = false },
+        { "<C-d>",      "<C-d>zz",                                                                         desc = "Scroll down",                                  nowait = true, remap = false },
+        { "<C-u>",      "<C-u>zz",                                                                         desc = "Scroll up",                                    nowait = true, remap = false },
+        { "n",          "nzzzv",                                                                           desc = "Move to next match",                           nowait = true, remap = false },
+        { "N",          "Nzzzv",                                                                           desc = "Move to previous match",                       nowait = true, remap = false },
+        { "<C-f>",      "<cmd>silent !tmux new tmux-sessionizer<CR>",                                      desc = "Open tmux sessionizer",                        nowait = true, remap = false },
+        {
+            "<leader>s",
+            ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>",
+            desc = "Substitute word under cursor"
+        },
+    },
     config = function()
         local wk = require("which-key")
 
-        vim.keymap.set("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", { desc = "Go left in tmux" })
-        vim.keymap.set("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", { desc = "Go right in tmux" })
-        vim.keymap.set("n", "<C-j>", "<cmd> TmuxNavigateDown<CR>", { desc = "Go down in tmux" })
-        vim.keymap.set("n", "<C-k>", "<cmd> TmuxNavigateUp<CR>", { desc = "Go up in tmux" })
+        -- Harpoon
+        local mark = require("harpoon.mark")
+        local ui = require("harpoon.ui")
 
-        local setup = {
-            plugins = {
-                marks = true,     -- shows a list of your marks on ' and `
-                registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-                -- the presets plugin, adds help for a bunch of default keybindings in Neovim
-                -- No actual key bindings are created
-                spelling = {
-                    enabled = true,   -- enabling this will show WhichKey when pressing z= to select spelling suggestions
-                    suggestions = 20, -- how many suggestions should be shown in the list?
-                },
-                presets = {
-                    operators = true,    -- adds help for operators like d, y, ...
-                    motions = true,      -- adds help for motions
-                    text_objects = true, -- help for text objects triggered after entering an operator
-                    windows = true,      -- default bindings on <c-w>
-                    nav = true,          -- misc bindings to work with windows
-                    z = true,            -- bindings for folds, spelling and others prefixed with z
-                    g = true,            -- bindings for prefixed with g
-                },
-            },
-            -- add operators that will trigger motion and text object completion
-            -- to enable all native operators, set the preset / operators plugin above
-            operators = { gc = "Comments" },
-            key_labels = {
-                -- override the label used to display some keys. It doesn't effect WK in any other way.
-                -- For example:
-                -- ["<space>"] = "SPC",
-                -- ["<cr>"] = "RET",
-                -- ["<tab>"] = "TAB",
-            },
-            motions = {
-                count = true,
-            },
-            icons = {
-                breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-                separator = "➜", -- symbol used between a key and it's label
-                group = "+", -- symbol prepended to a group
-            },
-            popup_mappings = {
-                scroll_down = "<c-d>", -- binding to scroll down inside the popup
-                scroll_up = "<c-u>",   -- binding to scroll up inside the popup
-            },
-            window = {
-                border = "none",          -- none, single, double, shadow
-                position = "bottom",      -- bottom, top
-                margin = { 1, 0, 1, 0 },  -- extra window margin [top, right, bottom, left]. When between 0 and 1, will be treated as a percentage of the screen size.
-                padding = { 1, 2, 1, 2 }, -- extra window padding [top, right, bottom, left]
-                winblend = 0,             -- value between 0-100 0 for fully opaque and 100 for fully transparent
-                zindex = 1000,            -- positive value to position WhichKey above other floating windows.
-            },
-            layout = {
-                height = { min = 4, max = 25 },                                               -- min and max height of the columns
-                width = { min = 20, max = 50 },                                               -- min and max width of the columns
-                spacing = 3,                                                                  -- spacing between columns
-                align = "left",                                                               -- align columns left, center or right
-            },
-            ignore_missing = false,                                                           -- enable this to hide mappings for which you didn't specify a label
-            hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "^:", "^ ", "^call ", "^lua " }, -- hide mapping boilerplate
-            show_help = true,                                                                 -- show a help message in the command line for using WhichKey
-            show_keys = true,                                                                 -- show the currently pressed key and its label as a message in the command line
-            triggers = "auto",                                                                -- automatically setup triggers
-            -- triggers = {"<leader>"} -- or specifiy a list manually
-            -- list of triggers, where WhichKey should not wait for timeoutlen and show immediately
-            triggers_nowait = {
-                -- marks
-                "`",
-                "'",
-                "g`",
-                "g'",
-                -- registers
-                '"',
-                "<c-r>",
-                -- spelling
-                "z=",
-            },
-            triggers_blacklist = {
-                -- list of mode / prefixes that should never be hooked by WhichKey
-                -- this is mostly relevant for keymaps that start with a native binding
-                i = { "j", "k" },
-                v = { "j", "k", "J", "K" },
-            },
-            -- disable the WhichKey popup for certain buf types and file types.
-            -- Disabled by default for Telescope
-            disable = {
-                buftypes = {},
-                filetypes = {},
-            },
-        }
+        wk.add({
+            { "<leader>a", mark.add_file,                 desc = "Add current file to Harpoon list" },
+            { "<C-e>",     ui.toggle_quick_menu,          desc = "Toggle Harpoon quick menu" },
+            { "<C-t>",     function() ui.nav_file(1) end, desc = "Go to 1st marked file" },
+            { "<C-n>",     function() ui.nav_file(2) end, desc = "Go to 2nd marked file" },
+            { "<C-s>",     function() ui.nav_file(3) end, desc = "Go to 3rd marked file" },
+        })
 
-        local opts = {
-            mode = "n",
-            prefix = "<leader>",
-            buffer = nil,
-            silent = true,
-            noremap = true,
-            nowait = true,
-        }
+        -- Telescope
+        local telescope = require("telescope")
+        telescope.load_extension("git_worktree")
+        local builtin = require("telescope.builtin")
 
-        local mappings = {
-            u = {
-                "<cmd>UndotreeToggle<cr>",
-                "Toggle Undotree",
+        wk.add({
+            { "<leader>ff", builtin.find_files,  desc = "Find project files" },
+            { "<leader>fd", builtin.diagnostics, desc = "Find project diagnostics" },
+            { "<leader>fg", builtin.git_files,   desc = "Find git files" },
+            {
+                "<leader>fs",
+                function()
+                    builtin.grep_string({ search = vim.fn.input("search: ") });
+                end,
+                desc = "Search project file contents"
             },
-            p = {
-                name = "Project",
-            },
-            l = {
-                name = "LSP",
-            },
-            z = {
-                name = "Zen Mode",
-                m = { "<cmd>ZenMode<cr>", "Toggle zen mode" },
-            },
-            g = {
-                name = "Git",
-                s = { "<cmd>Git<cr>", "Show git status" },
-            },
-            w = {
-                name = "Worktree",
-                c = { "<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>", "Create" },
-                s = { "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>", "Switch" },
-            },
-        }
+        })
 
-        wk.setup(setup)
-        wk.register(mappings, opts)
+        -- LSP
+        local lsp = require("lsp-zero")
+        lsp.on_attach(function(_, bufnr)
+            wk.add({
+                { "<leader>li",  "<cmd>LspInfo<cr>",                                 desc = "LSP info" },
+                { "gd",          function() vim.lsp.buf.definition() end,            desc = "Go to definition",            buffer = bufnr, remap = false },
+                { "gt",          function() vim.lsp.buf.type_definition() end,       desc = "Go to type definition",       buffer = bufnr, remap = false },
+                { "gi",          function() vim.lsp.buf.implementation() end,        desc = "Go to implementation",        buffer = bufnr, remap = false },
+                { "K",           function() vim.lsp.buf.hover() end,                 desc = "Show type information",       buffer = bufnr, remap = false },
+                { "<leader>lw",  function() vim.lsp.buf.workspace_symbol() end,      desc = "Show workspace symbols",      buffer = bufnr, remap = false },
+                { "<leader>ld",  function() vim.diagnostic.open_float() end,         desc = "Open diagnostics",            buffer = bufnr, remap = false },
+                { "<leader>nd",  function() vim.diagnostic.goto_next() end,          desc = "Go to next diagnostic",       buffer = bufnr, remap = false },
+                { "<leader>pd",  function() vim.diagnostic.goto_prev() end,          desc = "Go to previous diagnostic",   buffer = bufnr, remap = false },
+                { "<leader>lc",  function() vim.lsp.buf.code_action() end,           desc = "Show available code actions", buffer = bufnr, remap = false },
+                { "<leader>lR",  function() vim.lsp.buf.references() end,            desc = "Show references",             buffer = bufnr, remap = false },
+                { "<leader>lr",  function() vim.lsp.buf.rename() end,                desc = "Rename symbol",               buffer = bufnr, remap = false },
+                { "<leader>lsh", function() vim.lsp.buf.signature_help() end,        desc = "Signature help",              buffer = bufnr, remap = false },
+                { "<leader>lf",  vim.lsp.buf.format,                                 desc = "Format document",             remap = false },
+                { "<leader>fds", "<cmd>Telescope lsp_document_symbols<cr>",          desc = "Show Document Symbols",       buffer = bufnr, remap = false },
+                { "<leader>fws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", desc = "Show Workspace Symbols",      buffer = bufnr, remap = false },
+            })
+        end)
     end
 }
