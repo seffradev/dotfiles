@@ -27,6 +27,7 @@ return {
         { "<leader>tL", "<cmd>Trouble loclist toggle<cr>",                                                 desc = "Location List (Trouble)",                      nowait = true, remap = false },
         { "<leader>tQ", "<cmd>Trouble qflist toggle<cr>",                                                  desc = "Quickfix List (Trouble)",                      nowait = true, remap = false },
         { "<C-c>",      "<nop>",                                                                           desc = "",                                             nowait = true, remap = false },
+        { "gcc",        "<nop>",                                                                           desc = "",                                             nowait = true, remap = false },
         { "<leader>pv", vim.cmd.Ex,                                                                        desc = "Show project view",                            nowait = true, remap = false },
         { "J",          ":m '>+1<CR>gv=gv",                                                                desc = "Move line down",                               nowait = true, remap = false },
         { "K",          ":m '<-2<CR>gv=gv",                                                                desc = "Move line up",                                 nowait = true, remap = false },
@@ -93,7 +94,6 @@ return {
                 { "<leader>lr",  function() vim.lsp.buf.rename() end,                desc = "Rename symbol",               buffer = bufnr, remap = false },
                 { "<leader>lsh", function() vim.lsp.buf.signature_help() end,        desc = "Signature help",              buffer = bufnr, remap = false },
                 { "<leader>lf",  vim.lsp.buf.format,                                 desc = "Format document",             remap = false },
-                { "<leader>fds", "<cmd>Telescope lsp_document_symbols<cr>",          desc = "Show Document Symbols",       buffer = bufnr, remap = false },
                 { "<leader>fws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", desc = "Show Workspace Symbols",      buffer = bufnr, remap = false },
             })
         end)
