@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-mv ~/.local ~/local-tmp
-ln -s $(pwd)/.local ~/.local
-mv -n ~/local-tmp/* ~/local-tmp/.* ~/.local/
-rmdir ~/local-tmp
