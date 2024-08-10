@@ -1,3 +1,4 @@
+-- LSP
 local lspconfig = require("lspconfig")
 
 lspconfig.rust_analyzer.setup({
@@ -12,3 +13,12 @@ lspconfig.rust_analyzer.setup({
 })
 
 vim.cmd.LspStart()
+
+-- Treesitter
+local treesitter_configs = require("nvim-treesitter.configs")
+
+treesitter_configs.setup({
+    ensure_installed = {
+        "rust",
+    }
+})
