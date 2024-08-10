@@ -53,54 +53,5 @@ return {
         })
 
         lsp.setup()
-
-        require("lspconfig").lua_ls.setup({})
-        require("lspconfig").rust_analyzer.setup({
-            settings = {
-                ['rust-analyzer'] = {
-                    check = {
-                        command = "clippy",
-                    }
-                }
-            }
-        })
-        require("lspconfig").jdtls.setup({})
-        require("lspconfig").tsserver.setup({})
-        require("lspconfig").svelte.setup({})
-        require("lspconfig").vuels.setup({})
-        require("lspconfig").tailwindcss.setup({})
-        require("lspconfig").jsonls.setup({})
-        require("lspconfig").clangd.setup({})
-        require("lspconfig").gopls.setup({})
-        require("lspconfig").yamlls.setup({})
-        require("lspconfig").sqlls.setup({})
-        require("lspconfig").bashls.setup({})
-        require("lspconfig").csharp_ls.setup({})
-        require("lspconfig").htmx.setup({})
-        require("lspconfig").gleam.setup({})
-        require("lspconfig").gdscript.setup({})
-        require("lspconfig").gdshader_lsp.setup({})
-        require("lspconfig").intelephense.setup({})
-        require("lspconfig").taplo.setup({})
-        require("lspconfig").ruff.setup({})
-        require("lspconfig").ruff_lsp.setup({
-            on_attach = function(client, _)
-                if client.name == "ruff_lsp" then
-                    client.server_capabilities.hoverProvider = false
-                end
-            end
-        })
-        require("lspconfig").pyright.setup({
-            settings = {
-                pyright = {
-                    disableOrganizeImports = true,
-                },
-                python = {
-                    analysis = {
-                        ignore = { "*" },
-                    }
-                }
-            }
-        })
     end
 }
