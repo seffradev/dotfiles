@@ -1,10 +1,11 @@
 require("mason").setup({})
 require("trouble").setup({})
 
+local cmp = require("cmp")
+
 -- LSP
 local lsp = require("lsp-zero")
-local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
+local cmp_action = require("lsp-zero").cmp_action()
 
 lsp.preset("recommended")
 
@@ -16,26 +17,44 @@ vim.diagnostic.config({
     virtual_text = false,
     severity_sort = true,
     float = {
-        style = 'minimal',
-        border = 'rounded',
-        source = 'always',
-        header = '',
-        prefix = '',
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
     },
 })
 
+lsp.setup()
+
+-- Snippets
+require("luasnip.loaders.from_vscode").lazy_load()
+require("lspkind").init({})
+
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
-cmp.setup({
+
+cmp.setup {
+    sources = {
+        { name = "nvim_lsp" },
+        { name = "path" },
+        { name = "buffer" },
+        { name = "luasnip" },
+    },
     mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
         ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
         ["<C-y>"] = cmp.mapping.confirm({ select = true }),
         ["<C-Space>"] = cmp.mapping.complete(),
-        ['<C-c>'] = cmp_action.toggle_completion(),
+        ["<C-c>"] = cmp_action.toggle_completion(),
     }),
-})
-
-lsp.setup()
+    snippet = {
+        expand = function(args)
+            require "luasnip".lsp_expand(args.body)
+        end
+    },
+}
 
 -- Bindings
 --- LSP
@@ -71,3 +90,17 @@ wk.add({
     { "<leader>tL", "<cmd>Trouble loclist toggle<cr>",                            desc = "Location List (Trouble)",                      nowait = true, remap = false },
     { "<leader>tQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "Quickfix List (Trouble)",                      nowait = true, remap = false },
 })
+
+--- LuaSnip
+local ls = require("luasnip")
+
+vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
+vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
+vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+
+vim.keymap.set({"i", "s"}, "<C-E>", function()
+	if ls.choice_active() then
+		ls.change_choice(1)
+	end
+end, {silent = true})
+
