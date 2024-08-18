@@ -18,41 +18,31 @@ zen_mode.setup({
 })
 
 -- Bindings
-local wk = require("which-key")
+-- Visual mode
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
-wk.add({
-    { "n",     "nzzzv",            desc = "Move to next match",     nowait = true, remap = false },
-    { "gcc",   "<nop>",            desc = "",                       nowait = true, remap = false },
-    { "N",     "Nzzzv",            desc = "Move to previous match", nowait = true, remap = false },
-    { "K",     ":m '<-2<CR>gv=gv", desc = "Move line up",           nowait = true, remap = false },
-    { "J",     "mzJ`z",            desc = "Join line below",        nowait = true, remap = false },
-    { "J",     ":m '>+1<CR>gv=gv", desc = "Move line down",         nowait = true, remap = false },
-    { "<C-u>", "<C-u>zz",          desc = "Scroll up",              nowait = true, remap = false },
-    { "<C-d>", "<C-d>zz",          desc = "Scroll down",            nowait = true, remap = false },
-    { "<C-c>", "<nop>",            desc = "",                       nowait = true, remap = false },
-    {
-        "<leader>s",
-        ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>",
-        desc = "Substitute word under cursor"
-    },
-})
+-- Normal mode
+vim.keymap.set("n", "n", "nzzzv", { desc = "Move to next match" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "Move to previous match" })
+vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line below" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up" })
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down" })
+vim.keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", { desc = "Substitute word under cursor" })
+vim.keymap.set("n", "<C-c>", "<nop>")
+vim.keymap.set("n", "gcc", "<nop>")
 
---- Tmux
-wk.add({
-    { "<C-l>", "<cmd> TmuxNavigateRight<CR>",                desc = "Go right in tmux",      nowait = true, remap = false },
-    { "<C-k>", "<cmd> TmuxNavigateUp<CR>",                   desc = "Go up in tmux",         nowait = true, remap = false },
-    { "<C-j>", "<cmd> TmuxNavigateDown<CR>",                 desc = "Go down in tmux",       nowait = true, remap = false },
-    { "<C-h>", "<cmd> TmuxNavigateLeft<CR>",                 desc = "Go left in tmux",       nowait = true, remap = false },
-    { "<C-f>", "<cmd>silent !tmux new tmux-sessionizer<CR>", desc = "Open tmux sessionizer", nowait = true, remap = false },
-})
+-- Tmux
+-- Normal mode
+vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>", { desc = "Go right in tmux" })
+vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>", { desc = "Go up in tmux" })
+vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>", { desc = "Go down in tmux" })
+vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>", { desc = "Go left in tmux" })
 
---- Undotree
-wk.add({
-    { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Toggle Undotree", nowait = true, remap = false },
-})
+-- Undotree
+--  Normal mode
+vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<cr>", { desc = "Toggle Undotree" })
 
---- Zen Mode
-wk.add({
-    { "<leader>z",  group = "Zen Mode", desc = "",                nowait = true, remap = false },
-    { "<leader>zm", "<cmd>ZenMode<cr>", desc = "Toggle zen mode", nowait = true, remap = false },
-})
+-- Zen Mode
+-- Normal mode
+vim.keymap.set("n", "<leader>zm", "<cmd>ZenMode<cr>", { desc = "Toggle zen mode" })

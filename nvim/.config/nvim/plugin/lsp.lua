@@ -57,50 +57,46 @@ cmp.setup {
 }
 
 -- Bindings
---- LSP
-local wk = require("which-key")
-
+-- LSP
 lsp.on_attach(function(_, bufnr)
-    wk.add({
-        { "<leader>l",   group = "LSP",                                      desc = "LSP",                         nowait = true,  remap = false },
-        { "<leader>li",  "<cmd>LspInfo<cr>",                                 desc = "LSP info" },
-        { "gd",          function() vim.lsp.buf.definition() end,            desc = "Go to definition",            buffer = bufnr, remap = false },
-        { "gt",          function() vim.lsp.buf.type_definition() end,       desc = "Go to type definition",       buffer = bufnr, remap = false },
-        { "gi",          function() vim.lsp.buf.implementation() end,        desc = "Go to implementation",        buffer = bufnr, remap = false },
-        { "K",           function() vim.lsp.buf.hover() end,                 desc = "Show type information",       buffer = bufnr, remap = false },
-        { "<leader>lw",  function() vim.lsp.buf.workspace_symbol() end,      desc = "Show workspace symbols",      buffer = bufnr, remap = false },
-        { "<leader>ld",  function() vim.diagnostic.open_float() end,         desc = "Open diagnostics",            buffer = bufnr, remap = false },
-        { "<leader>nd",  function() vim.diagnostic.goto_next() end,          desc = "Go to next diagnostic",       buffer = bufnr, remap = false },
-        { "<leader>pd",  function() vim.diagnostic.goto_prev() end,          desc = "Go to previous diagnostic",   buffer = bufnr, remap = false },
-        { "<leader>lc",  function() vim.lsp.buf.code_action() end,           desc = "Show available code actions", buffer = bufnr, remap = false },
-        { "<leader>lR",  function() vim.lsp.buf.references() end,            desc = "Show references",             buffer = bufnr, remap = false },
-        { "<leader>lr",  function() vim.lsp.buf.rename() end,                desc = "Rename symbol",               buffer = bufnr, remap = false },
-        { "<leader>lsh", function() vim.lsp.buf.signature_help() end,        desc = "Signature help",              buffer = bufnr, remap = false },
-        { "<leader>lf",  vim.lsp.buf.format,                                 desc = "Format document",             remap = false },
-        { "<leader>fws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", desc = "Show Workspace Symbols",      buffer = bufnr, remap = false },
-    })
+    -- Insert mode
+    vim.keymap.set("i", "<C-s>", function() vim.lsp.buf.signature_help() end, { desc = "Signature help" })
+
+    -- Normal mode
+    vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "LSP info" })
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show type information" })
+    vim.keymap.set("n", "<leader>lw", vim.lsp.buf.workspace_symbol, { desc = "Show workspace symbols" })
+    vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, { desc = "Open diagnostics" })
+    vim.keymap.set("n", "<leader>nd", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+    vim.keymap.set("n", "<leader>pd", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+    vim.keymap.set("n", "<leader>lc", vim.lsp.buf.code_action, { desc = "Show available code actions" })
+    vim.keymap.set("n", "<leader>lR", vim.lsp.buf.references, { desc = "Show references" })
+    vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "Rename symbol" })
+    vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, { desc = "Format document" })
+    vim.keymap.set("n", "<leader>fws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+        { desc = "Show Workspace symbols" })
 end)
 
---- Trouble
-wk.add({
-    { "<leader>tx", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Diagnostics (Trouble)",                        nowait = true, remap = false },
-    { "<leader>tX", "<cmd>Trouble diagnostics toggle filter.buf=1<cr>",           desc = "Buffer Diagnostics (Trouble)",                 nowait = true, remap = false },
-    { "<leader>ts", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "Symbols (Trouble)",                            nowait = true, remap = false },
-    { "<leader>tl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions / references / ... (Trouble)", nowait = true, remap = false },
-    { "<leader>tL", "<cmd>Trouble loclist toggle<cr>",                            desc = "Location List (Trouble)",                      nowait = true, remap = false },
-    { "<leader>tQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "Quickfix List (Trouble)",                      nowait = true, remap = false },
-})
+-- Trouble
+vim.keymap.set("n", "<leader>tx", "<cmd>Trouble diagnostic toggle<cr>", { desc = "Diagnostics (Trouble)" })
+vim.keymap.set("n", "<leader>tX", "<cmd>Trouble diagnostics toggle filter.buf=1<cr>", { desc = "Buffer Diagnostics (Trouble)" })
+vim.keymap.set("n", "<leader>ts", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
+vim.keymap.set("n", "<leader>tl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", { desc = "LSP Definitions / references / ... (Trouble)" })
+vim.keymap.set("n", "<leader>tL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
+vim.keymap.set("n", "<leader>tQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
 
---- LuaSnip
+-- LuaSnip
 local ls = require("luasnip")
 
-vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+vim.keymap.set({ "i" }, "<C-K>", function() ls.expand() end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<C-L>", function() ls.jump(1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<C-J>", function() ls.jump(-1) end, { silent = true })
 
-vim.keymap.set({"i", "s"}, "<C-E>", function()
-	if ls.choice_active() then
-		ls.change_choice(1)
-	end
-end, {silent = true})
-
+vim.keymap.set({ "i", "s" }, "<C-E>", function()
+    if ls.choice_active() then
+        ls.change_choice(1)
+    end
+end, { silent = true })
