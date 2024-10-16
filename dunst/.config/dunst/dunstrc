@@ -1,0 +1,14 @@
+[global]
+width = 480
+height = (96, 192)
+origin = top-right
+offset = (24, 24)
+progress_bar = false
+notification_limit = 5
+separator_height = 4
+padding = 12
+horizontal_padding = 16
+frame_width = 2
+font = JetBrains Mono 14
+corner_radius = 20
+corners = all

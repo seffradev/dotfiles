@@ -1,9 +1,5 @@
 return {
     {
-        "hinell/lsp-timeout.nvim",
-        dependencies = { "neovim/nvim-lspconfig" },
-    },
-    {
         "VonHeikemen/lsp-zero.nvim",
         branch = "v3.x",
         dependencies = {

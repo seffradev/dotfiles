@@ -34,4 +34,4 @@ vim.opt.colorcolumn = "80"
 require("plugin-manager")
 
 -- Theme, must be after the plugin-manager is loaded
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("midnight")

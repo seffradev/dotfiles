@@ -12,8 +12,9 @@ local ui = require("harpoon.ui")
 
 wk.add({
     { "<leader>a", mark.add_file,                 desc = "Add current file to Harpoon list" },
-    { "<C-e>",     ui.toggle_quick_menu,          desc = "Toggle Harpoon quick menu" },
-    { "<C-t>",     function() ui.nav_file(1) end, desc = "Go to 1st marked file" },
-    { "<C-n>",     function() ui.nav_file(2) end, desc = "Go to 2nd marked file" },
-    { "<C-s>",     function() ui.nav_file(3) end, desc = "Go to 3rd marked file" },
+    { "<leader>h", ui.toggle_quick_menu,          desc = "Toggle Harpoon quick menu" },
+    { "<A-h>",     function() ui.nav_file(1) end, desc = "Go to 1st marked file" },
+    { "<A-j>",     function() ui.nav_file(2) end, desc = "Go to 2nd marked file" },
+    { "<A-k>",     function() ui.nav_file(3) end, desc = "Go to 3rd marked file" },
+    { "<A-l>",     function() ui.nav_file(4) end, desc = "Go to 4th marked file" },
 })
