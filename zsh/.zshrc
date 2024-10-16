@@ -1,10 +1,20 @@
-# Move into tmux unless we already are there
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-    exec tmux
+# Move into tmux unless we are already there
+if [ ! $(tty | grep tty) ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+    exec tmux new -As 0
 fi
 
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
+export SSH_AUTH_SOCK=~/.1password/agent.sock
+export MANWIDTH=72
+export EDITOR='nvim'
+export PAGER='bat'
+export PAGER_OPTS='-p'
+export MANPAGER='bat -p'
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target,venv,cache,.cache,Cache,cached,.local,.config,.cargo,.mozilla,.rustup,.npm,.vim,.oh-my-zsh
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
 CASE_SENSITIVE="false"
 COMPLETION_WAITING_DOTS="true"
@@ -18,19 +28,20 @@ HYPHEN_INSENSITIVE="true"
 ZSH_CUSTOM=$ZSH/custom
 ZSH_THEME="robbyrussell"
 
+export PNPM_HOME="/home/ha/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
 zstyle ':omz:update' frequency 13
 zstyle ':omz:update' mode reminder
 
 plugins=(git fzf z)
 
-export EDITOR='nvim'
-export PAGER='less --use-color'
-export FZF_CTRL_T_OPTS="
-  --walker-skip .git,node_modules,target,venv,cache,.cache,Cache,cached,.local,.config,.cargo,.mozilla,.rustup,.npm,.vim,.oh-my-zsh
-  --preview 'bat -n --color=always {}'
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source $HOME/.config/op/plugins.sh
 source $ZSH/oh-my-zsh.sh
+
+bindkey -v

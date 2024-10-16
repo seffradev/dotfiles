@@ -27,6 +27,65 @@ vim.diagnostic.config({
 
 lsp.setup()
 
+local lspconfig = require("lspconfig")
+
+lspconfig.bashls.setup({})
+lspconfig.clangd.setup({})
+lspconfig.csharp_ls.setup({})
+lspconfig.gleam.setup({})
+lspconfig.gopls.setup({})
+lspconfig.harper_ls.setup({})
+lspconfig.htmx.setup({})
+lspconfig.intelephense.setup({})
+lspconfig.jdtls.setup({})
+lspconfig.jsonls.setup({})
+lspconfig.lemminx.setup({})
+lspconfig.lua_ls.setup({})
+lspconfig.mesonlsp.setup({})
+lspconfig.sqlls.setup({})
+lspconfig.svelte.setup({})
+lspconfig.tailwindcss.setup({})
+lspconfig.taplo.setup({})
+lspconfig.texlab.setup({})
+lspconfig.ts_ls.setup({})
+lspconfig.vuels.setup({})
+lspconfig.yamlls.setup({})
+lspconfig.zls.setup({})
+
+-- Python LSP
+lspconfig.ruff.setup({})
+lspconfig.ruff_lsp.setup({
+    on_attach = function(client, _)
+        if client.name == "ruff_lsp" then
+            client.server_capabilities.hoverProvider = false
+        end
+    end
+})
+lspconfig.pyright.setup({
+    settings = {
+        pyright = {
+            disableOrganizeImports = true,
+        },
+        python = {
+            analysis = {
+                ignore = { "*" },
+            }
+        }
+    }
+})
+
+-- Rust LSP
+lspconfig.rust_analyzer.setup({
+    autostart = true,
+    settings = {
+        ['rust-analyzer'] = {
+            check = {
+                command = "clippy",
+            }
+        }
+    }
+})
+
 -- Snippets
 require("luasnip.loaders.from_vscode").lazy_load()
 require("lspkind").init({})
