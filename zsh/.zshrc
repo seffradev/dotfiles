@@ -5,7 +5,6 @@ fi
 
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
-export SSH_AUTH_SOCK=~/.1password/agent.sock
 export MANWIDTH=72
 export EDITOR='nvim'
 export PAGER='bat'
@@ -41,7 +40,18 @@ plugins=(git fzf z)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-source $HOME/.config/op/plugins.sh
-source $ZSH/oh-my-zsh.sh
+OP=$HOME/.config/op/plugins.sh
+if [[ -f $OP ]]; then
+    export SSH_AUTH_SOCK=~/.1password/agent.sock
+    source $OP
+fi
+
+OMZ=$ZSH/oh-my-zsh.sh
+if [[ -f $OMZ ]]; then
+    source $OMZ
+else
+    echo "WARNING: Oh My Zsh couldn't be sourced"
+fi
+
 
 bindkey -v
