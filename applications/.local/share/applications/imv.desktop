@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Image viewer
+Comment=Image viewer for Wayland and X11
+GenericName=Image viewer
+Exec=imv
+Type=Application

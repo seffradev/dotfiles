@@ -3,7 +3,11 @@ if [ ! $(tty | grep tty) ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [
     exec tmux new -As 0
 fi
 
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# Paths
+export PATH=$HOME/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+export PATH=/usr/local/bin:$PATH
+
 export ZSH="$HOME/.oh-my-zsh"
 export MANWIDTH=72
 export EDITOR='nvim'
@@ -36,6 +40,8 @@ esac
 zstyle ':omz:update' frequency 13
 zstyle ':omz:update' mode reminder
 
+autoload zmv
+
 plugins=(git fzf z)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -55,3 +61,6 @@ fi
 
 
 bindkey -v
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

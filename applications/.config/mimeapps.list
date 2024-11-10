@@ -1,0 +1,16 @@
+[Default Applications]
+text/html=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/about=firefox.desktop
+x-scheme-handler/unknown=firefox.desktop
+application/pdf=org.pwmt.zathura.desktop
+image=imv.desktop
+image/png=imv.desktop
+image/jpg=imv.desktop
+image/jpe=imv.desktop
+image/jpeg=imv.desktop
+image/svg=imv.desktop
+image/svg+xml=imv.desktop
+text/plain=nvim.desktop
+x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
