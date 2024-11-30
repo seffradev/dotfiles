@@ -42,7 +42,7 @@ zstyle ':omz:update' mode reminder
 
 autoload zmv
 
-plugins=(git fzf z mvn)
+plugins=(git fzf z mvn zsh-autosuggestions)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
