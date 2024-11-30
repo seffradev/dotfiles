@@ -66,3 +66,5 @@ bindkey -v
 export PATH="$PATH:$HOME/.rvm/bin"
 
 alias lg=lazygit
+
+eval "$(starship init zsh)"
