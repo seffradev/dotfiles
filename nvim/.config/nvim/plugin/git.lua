@@ -1,3 +1,9 @@
+local wk = require("which-key")
+
+wk.add({
+    { "<leader>g", group = "Git", desc = "", nowait = true, remap = false },
+})
+
 require("git-worktree").setup({
     fetch_on_create = false,
 })

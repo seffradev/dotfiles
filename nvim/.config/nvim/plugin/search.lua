@@ -1,3 +1,9 @@
+local wk = require("which-key")
+
+wk.add({
+    { "<leader>f", group = "Find", desc = "", nowait = true, remap = false },
+})
+
 local telescope = require("telescope")
 
 telescope.load_extension("dap")
