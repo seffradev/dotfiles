@@ -134,7 +134,7 @@ lsp.on_attach(function(_, bufnr)
     vim.keymap.set("n", "<leader>lR", vim.lsp.buf.references, { desc = "Show references" })
     vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "Rename symbol" })
     vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, { desc = "Format document" })
-    vim.keymap.set("n", "<leader>fws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+    vim.keymap.set("n", "<leader>lW", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
         { desc = "Show Workspace symbols" })
 end)
 
