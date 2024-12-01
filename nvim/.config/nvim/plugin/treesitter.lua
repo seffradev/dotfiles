@@ -47,10 +47,7 @@ configs.setup({
             enable = true,
             border = 'rounded',
             floating_preview_opts = {},
-            peek_definition_code = {
-                ["<leader>df"] = "@function.outer",
-                ["<leader>ds"] = "@class.outer",
-            }
+            peek_definition_code = {},
         },
         select = {
             enable = true,
