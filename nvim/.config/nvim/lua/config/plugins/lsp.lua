@@ -24,6 +24,7 @@ return {
       config.lua_ls.setup { capabilities = capabilities }
       config.clangd.setup { capabilities = capabilities }
       config.texlab.setup { capabilities = capabilities }
+      config.mesonlsp.setup { capabilities = capabilities }
       config.ruff.setup { capabilities = capabilities }
       config.pyright.setup {
         capabilities = capabilities,

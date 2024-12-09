@@ -46,6 +46,7 @@ return {
       vim.keymap.set("n", "<space>fh", builtin.help_tags, { desc = "Search help tags" })
       vim.keymap.set("n", "<space>fk", builtin.keymaps, { desc = "Search keymaps" })
       vim.keymap.set("n", "<space>fr", builtin.lsp_references, { desc = "Search symbol references" })
+      vim.keymap.set("n", "<space>fR", builtin.resume, { desc = "Resume last search" })
       vim.keymap.set("n", "<space>fb", builtin.buffers, { desc = "Search open buffers" })
       vim.keymap.set("n", "<space>fc", builtin.command_history, { desc = "Search command history" })
 
