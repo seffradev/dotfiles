@@ -1,2 +1,3 @@
 # nvim config
-Requires `ripgrep` for Telescope
+
+Requires `ripgrep` and `fd` for Telescope.
