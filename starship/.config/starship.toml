@@ -1,5 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format = "$time$username$hostname$directory$git_branch$shell$character"
+
 add_newline = false
 
 [package]
@@ -14,6 +16,11 @@ disabled = false
 format = '[$time]($style) '
 time_format = '%Y-%m-%d %T'
 utc_time_offset = '+1'
+
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
+truncation_length = 17
+truncation_symbol = ""
 
 [c]
 detect_extensions = [ "c", "h", "cpp", "hpp", "cxx", "hxx" ]
