@@ -68,3 +68,4 @@ export PATH="$PATH:$HOME/.rvm/bin"
 alias lg=lazygit
 
 eval "$(starship init zsh)"
+test -f "/home/ha/.xmake/profile" && source "/home/ha/.xmake/profile"
