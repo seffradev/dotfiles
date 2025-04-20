@@ -31,6 +31,6 @@
         "format-icons": ["", "", "", "", ""]
     },
     "clock": {
-        "format": "{:%H:%M}"
+        "format": "{:%Y-%m-%d %H:%M}"
     }
 }

@@ -4,7 +4,7 @@
     font-family: "JetBrains Mono";
     font-size: 14pt;
     min-height: 0;
-    background: black;
+    background: transparent;
 }
 
 window#waybar {
@@ -17,7 +17,10 @@ window#waybar {
 }
 
 #workspaces {
-    padding: 0 24px;
+	margin: 6px 12px 0;
+	padding: 6px 24px;
+	border-radius: 20px;
+	background: black;
 }
 
 #workspaces button {
@@ -34,7 +37,7 @@ window#waybar {
 
 #mode {
     background: #64727D;
-    border-bottom: 4px solid white;
+    border-top: 4px solid white;
 }
 
 #clock, #battery {
@@ -43,6 +46,10 @@ window#waybar {
 }
 
 #clock {
+	margin: 6px 12px 0;
+	padding: 6px 24px;
+	border-radius: 20px;
+	background: black;
 }
 
 #battery {
@@ -64,3 +71,11 @@ window#waybar {
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
+
+#pulseaudio {
+	margin: 6px 12px 0;
+	padding: 6px 24px;
+	border-radius: 20px;
+	background: black;
+}
+
