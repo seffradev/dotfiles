@@ -27,6 +27,7 @@ return {
       config.texlab.setup { capabilities = capabilities }
       config.mesonlsp.setup { capabilities = capabilities }
       config.ruff.setup { capabilities = capabilities }
+      config.gdscript.setup { capabilities = capabilities }
       config.pyright.setup {
         capabilities = capabilities,
         settings = {
@@ -83,10 +84,10 @@ return {
             vim.api.nvim_create_autocmd("BufWritePre", {
               buffer = args.buf,
               callback = function()
-                vim.lsp.buf.format({
-                  bufnr = args.buf,
-                  id = client.id,
-                })
+                -- vim.lsp.buf.format({
+                --   bufnr = args.buf,
+                --   id = client.id,
+                -- })
               end,
             })
           end

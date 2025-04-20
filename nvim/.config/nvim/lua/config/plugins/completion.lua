@@ -13,6 +13,6 @@ return {
       },
     },
     signature = { enabled = true },
-    opts_extend = { "sources.default" }
+    opts_extend = { "sources.default", "sources.omni", "sources.cmdline" }
   },
 }
