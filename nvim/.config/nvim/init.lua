@@ -12,6 +12,7 @@ set.clipboard = "unnamedplus"
 set.hlsearch = false
 set.incsearch = true
 set.wrap = false
+set.textwidth = 67
 
 set.swapfile = false
 set.backup = false

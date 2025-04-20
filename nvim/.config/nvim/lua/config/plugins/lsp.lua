@@ -3,6 +3,7 @@ return {
     "neovim/nvim-lspconfig",
     enabled = true,
     dependencies = {
+      "obarbier/sonarlint.nvim",
       "saghen/blink.cmp",
       {
         "folke/lazydev.nvim",
@@ -91,6 +92,23 @@ return {
           end
         end,
       })
+
+      local sonarlint = require "sonarlint"
+      sonarlint.setup {
+        server = {
+          cmd = {
+            'sonarlint-ls',
+            -- Ensure that sonarlint-language-server uses stdio channel
+            '-stdio',
+            -- '-analyzers', 'path/to/analyzer1.jar', 'path/to/analyzer2.jar', 'path/to/analyzer3.jar',
+          },
+        },
+        filetypes = {
+          -- Tested and working
+          'python',
+          'cpp',
+        }
+      }
     end,
   },
 }
