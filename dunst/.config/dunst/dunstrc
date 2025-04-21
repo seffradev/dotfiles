@@ -1,14 +1,18 @@
 [global]
 width = 480
-height = (96, 192)
+height = (64, 128)
 origin = top-right
 offset = (24, 24)
-progress_bar = false
+progress_bar = true
 notification_limit = 5
 separator_height = 4
 padding = 12
 horizontal_padding = 16
-frame_width = 2
-font = JetBrains Mono 14
-corner_radius = 20
+frame_width = 0
+font = JetBrains Mono 16
+corner_radius = 12
 corners = all
+icon_corner_radius = 12
+icon_corners = all
+gaps_size = 8
+bgcolor="#000000ea"

@@ -1,5 +1,5 @@
 configuration {
-    font: "JetBrains Mono 10";
+    font: "JetBrains Mono 16";
     line-margin: 10;
 
     display-ssh:    "";

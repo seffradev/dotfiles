@@ -1,10 +1,12 @@
 * {
-    border: none;
-    border-radius: 0;
-    font-family: "JetBrains Mono";
-    font-size: 14pt;
-    min-height: 0;
     background: transparent;
+    border-radius: 0;
+    border: none;
+    font-family: "JetBrains Mono";
+    font-size: 16pt;
+    margin: 0;
+    min-height: 0;
+    padding: 0;
 }
 
 window#waybar {
@@ -16,66 +18,38 @@ window#waybar {
     font-family: "JetBrains Mono";
 }
 
-#workspaces {
-	margin: 6px 12px 0;
-	padding: 6px 24px;
-	border-radius: 20px;
-	background: black;
+#backlight, #battery, #clock, #pulseaudio, #workspaces {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    margin: 6px 16px;
+    padding: 6px 24px;
+}
+
+#pulseaudio.muted {
+	opacity: 0.5;
 }
 
 #workspaces button {
-    padding: 0 6px;
     background: transparent;
-    color: white;
     border-top: 2px solid transparent;
+    color: white;
+    padding: 0 6px;
 }
 
 #workspaces button.active {
-    color: #c9545d;
     border-top: 2px solid #c9545d;
-}
-
-#mode {
-    background: #64727D;
-    border-top: 4px solid white;
-}
-
-#clock, #battery {
-    padding: 0 4px;
-    margin: 0 2px;
-}
-
-#clock {
-	margin: 6px 12px 0;
-	padding: 6px 24px;
-	border-radius: 20px;
-	background: black;
-}
-
-#battery {
-    margin: 0 24px;
+    color: #c9545d;
 }
 
 #battery icon {
     color: red;
 }
 
-#battery.charging {
-}
-
 #battery.warning:not(.charging) {
-    color: white;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
     animation-direction: alternate;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-name: blink;
+    animation-timing-function: linear;
+    color: white;
 }
-
-#pulseaudio {
-	margin: 6px 12px 0;
-	padding: 6px 24px;
-	border-radius: 20px;
-	background: black;
-}
-
