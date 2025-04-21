@@ -22,11 +22,11 @@ set.undofile = true
 set.termguicolors = true
 set.signcolumn = "yes"
 
-keymap.set("n", "<space><space>x", "<cmd>source %<CR>", { desc = "Source current file" })
-keymap.set("n", "<space>x", ":.lua<CR>", { desc = "Source current line" })
-keymap.set("v", "<space>x", ":lua<CR>", { desc = "Source selection" })
+keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>", { desc = "Source current file" })
+keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Source current line" })
+keymap.set("v", "<leader>x", ":lua<CR>", { desc = "Source selection" })
 
-keymap.set("n", "<space>pv", "<cmd>Explore<CR>", { desc = "Open Netrw" })
+keymap.set("n", "<leader>pv", "<cmd>Explore<CR>", { desc = "Open Netrw" })
 
 keymap.set("n", "<C-H>", "<C-W>h", { desc = "Focus left" })
 keymap.set("n", "<C-J>", "<C-W>j", { desc = "Focus down" })

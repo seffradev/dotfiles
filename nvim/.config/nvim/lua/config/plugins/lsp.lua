@@ -3,7 +3,6 @@ return {
     "neovim/nvim-lspconfig",
     enabled = true,
     dependencies = {
-      "obarbier/sonarlint.nvim",
       "saghen/blink.cmp",
       {
         "folke/lazydev.nvim",
@@ -19,45 +18,11 @@ return {
       },
     },
     config = function()
-      local config = require "lspconfig"
-      local capabilities = require "blink.cmp".get_lsp_capabilities()
+      vim.lsp.enable("typos_lsp")
+      vim.lsp.config("typos_lsp", {})
 
-      config.lua_ls.setup { capabilities = capabilities }
-      config.clangd.setup { capabilities = capabilities }
-      config.texlab.setup { capabilities = capabilities }
-      config.mesonlsp.setup { capabilities = capabilities }
-      config.ruff.setup { capabilities = capabilities }
-      config.gdscript.setup { capabilities = capabilities }
-      config.pyright.setup {
-        capabilities = capabilities,
-        settings = {
-          pyright = {
-            disableOrganizeImports = true,
-          },
-          python = {
-            analysis = {
-              ignore = {
-                "*",
-              },
-            },
-          },
-        },
-      }
-      config.typos_lsp.setup { capabilities = capabilities }
-      config.harper_ls.setup {
-        capabilities = capabilities,
-        settings = {
-          ["harper-ls"] = {
-            userDictPath = "~/dictionary.txt"
-          },
-        },
-      }
-      config.rust_analyzer.setup {
-        capabilities = capabilities,
-        diagnostics = {
-          enable = false,
-        }
-      }
+      vim.lsp.enable("harper_ls")
+      vim.lsp.config("harper_ls", {})
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
@@ -67,16 +32,21 @@ return {
             return
           end
 
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
-          vim.keymap.set("n", "gt", vim.lsp.buf.type_definition)
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+
+          if client.supports_method(client, "textDocument/declaration", 0) then
+            vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+          else
+            vim.keymap.set("n", "gD", vim.lsp.buf.definition, { desc = "Go to definition" })
+          end
+
+          vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
 
           if client.supports_method(client, "textDocument/implementation", 0) then
-            -- Create a keymap for vim.lsp.buf.implementation
+            vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
           end
 
           if client.supports_method(client, "textDocument/completion", 0) then
-            -- Enable auto-completion
             vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = false })
           end
 
@@ -84,32 +54,24 @@ return {
             vim.api.nvim_create_autocmd("BufWritePre", {
               buffer = args.buf,
               callback = function()
-                -- vim.lsp.buf.format({
-                --   bufnr = args.buf,
-                --   id = client.id,
-                -- })
+                vim.lsp.buf.format({
+                  bufnr = args.buf,
+                  id = client.id,
+                })
               end,
             })
           end
         end,
       })
-
-      local sonarlint = require "sonarlint"
-      sonarlint.setup {
-        server = {
-          cmd = {
-            'sonarlint-ls',
-            -- Ensure that sonarlint-language-server uses stdio channel
-            '-stdio',
-            -- '-analyzers', 'path/to/analyzer1.jar', 'path/to/analyzer2.jar', 'path/to/analyzer3.jar',
-          },
-        },
-        filetypes = {
-          -- Tested and working
-          'python',
-          'cpp',
-        }
-      }
-    end,
+    end
+  },
+  {
+    'williamboman/mason.nvim',
+    opts = {
+      ensure_installed = { "typos_lsp", "harper_ls" },
+    },
+  },
+  {
+    'williamboman/mason-lspconfig.nvim',
   },
 }
