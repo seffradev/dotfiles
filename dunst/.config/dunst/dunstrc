@@ -1,6 +1,5 @@
 [global]
 width = 480
-height = (64, 128)
 origin = top-right
 offset = (24, 24)
 progress_bar = true
