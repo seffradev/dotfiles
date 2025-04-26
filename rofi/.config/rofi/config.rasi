@@ -22,4 +22,4 @@ configuration {
 
 // Theme installed from
 // https://github.com/newmanls/rofi-themes-collection
-@theme "/usr/share/rofi/themes/sidebar.rasi"
+@theme "~/.local/share/rofi/themes/rounded-blue-dark.rasi"
