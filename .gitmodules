@@ -1,3 +1,6 @@
 [submodule "kitty/kitty-themes"]
 	path = kitty/kitty-themes
 	url = https://github.com/dexpota/kitty-themes
+[submodule "rofi/.local/share/rofi"]
+	path = rofi/.local/share/rofi
+	url = https://github.com/newmanls/rofi-themes-collection
