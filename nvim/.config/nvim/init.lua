@@ -43,10 +43,6 @@ keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up" })
 keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down" })
 keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>",
     { desc = "Substitute word under cursor" })
-keymap.set("n", "<leader>S", "V:s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>",
-    { desc = "Substitute word under cursor on current line" })
-keymap.set("v", "<leader>s", "\"my:%s/\\<<C-r>m\\>/<C-r>m/gI<Left><Left><Left>",
-    { desc = "Substitute selection" })
 
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
