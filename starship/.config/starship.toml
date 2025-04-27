@@ -1,6 +1,8 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "$time$username$hostname$directory$git_branch$shell$character"
+format = "$username$hostname$directory$git_branch$shell$character"
+
+right_format = "$time"
 
 add_newline = false
 
