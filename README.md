@@ -1,21 +1,11 @@
 # dotfiles
-A setup for using `GNU stow` and `git` to handle my dotfiles.
 
-For full setup, run
+## When using NixOS
+
+Run:
+
 ```sh
-stow -t ~/ \
-    applications \
-    clang \
-    dunst \
-    electron \
-    hypr \
-    kitty \
-    nvim \
-    paru \
-    rofi \
-    scripts \
-    tmux \
-    user-dirs \
-    waybar \
-    zsh
+nixos-rebuild switch --flake .
 ```
+
+And everything should be set up.

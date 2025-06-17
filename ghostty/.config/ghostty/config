@@ -1,7 +1,0 @@
-background = 000000
-font-size = 16
-bold-is-bright = true
-font-thicken = true
-window-colorspace = display-p3
-window-decoration = false
-theme = deep

@@ -1,2 +1,0 @@
-#!/bin/zsh
-tar -czf - $1 | ssh $2 "tar -xzf - $1"
