@@ -3,6 +3,11 @@
     home.packages = with pkgs; [
         neovim
         tracy
+        glab
+        gh
+        typos-lsp
+        harper
+        samply
     ];
 
     home.file = {
