@@ -1,7 +1,4 @@
 ---@diagnostic disable-next-line: missing-fields
-require "mason-lspconfig".setup { ensure_installed = { "ruff", "pyright" } }
-
----@diagnostic disable-next-line: missing-fields
 require "nvim-treesitter.configs".setup {
     ensure_installed = {
         "python",

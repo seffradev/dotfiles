@@ -65,13 +65,4 @@ return {
             })
         end
     },
-    {
-        'williamboman/mason.nvim',
-        opts = {
-            ensure_installed = { "typos_lsp", "harper_ls" },
-        },
-    },
-    {
-        'williamboman/mason-lspconfig.nvim',
-    },
 }

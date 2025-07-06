@@ -9,9 +9,6 @@ require "nvim-treesitter.configs".setup {
         "typst",
     },
 }
----
----@diagnostic disable-next-line: missing-fields
-require "mason-lspconfig".setup { ensure_installed = { "tinymist" } }
 
 vim.lsp.config("tinymist", {})
 vim.lsp.enable("tinymist")

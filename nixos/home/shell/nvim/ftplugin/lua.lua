@@ -1,6 +1,3 @@
----@diagnostic disable-next-line: missing-fields
-require "mason-lspconfig".setup { ensure_installed = { "lua_ls" } }
-
 local set = vim.opt_local
 
 set.shiftwidth = 4
