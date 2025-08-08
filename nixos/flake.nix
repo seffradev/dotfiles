@@ -16,6 +16,11 @@
             url = "github:nix-community/NUR";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+
+        minimal-tmux = {
+            url = "github:niksingh710/minimal-tmux-status";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = {
@@ -23,6 +28,7 @@
         nixpkgs,
         home-manager,
         nur,
+        minimal-tmux,
         ...
     } @inputs: {
         nixosConfigurations = {

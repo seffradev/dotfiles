@@ -1,4 +1,7 @@
-{ pkgs, ...  }: {
+{ pkgs, inputs, ...  }:
+let
+in
+{
     programs = {
         tmux = {
             enable = true;
@@ -13,10 +16,9 @@
                 tmuxPlugins.yank
                 tmuxPlugins.sensible
                 tmuxPlugins.vim-tmux-navigator
+                { plugin = inputs.minimal-tmux.packages.${pkgs.system}.default; }
             ];
             extraConfig = ''
-                set -g @plugin 'niksingh710/minimal-tmux-status'
-
                 bind-key -T copy-mode-vi v send-keys -X begin-selection
                 bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
                 bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
@@ -26,11 +28,6 @@
 
                 bind '"' split-window -v -c "#{pane_current_path}"
                 bind % split-window -h -c "#{pane_current_path}"
-
-                if "test ! -d ~/.tmux/plugins/tpm" \
-                   "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins'"
-
-                run "~/.tmux/plugins/tpm/tpm"
             '';
         };
     };
