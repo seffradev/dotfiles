@@ -1,56 +1,24 @@
 { config, pkgs, ... }: {
     imports = [
+        ../../modules/1password.nix
+        ../../modules/audio.nix
+        ../../modules/fonts.nix
+        ../../modules/layout/us-mac.nix
+        ../../modules/locale/sv_SE.nix
+        ../../modules/networking.nix
+        ../../modules/nvidia.nix
+        ../../modules/security.nix
+        ../../modules/ssh.nix
+        ../../modules/steam
         ../../modules/system.nix
+        ../../modules/systemd.nix
+        ../../modules/timezone/europe/stockholm.nix
+        ../../modules/vim-plugins.nix
+        ../../modules/virtualization.nix
         ./hardware-configuration.nix
     ];
 
-    boot.loader = {
-        systemd-boot.enable = true;
-        efi.canTouchEfiVariables = true;
-    };
-
-    environment.systemPackages = with pkgs; [
-        audacity
-        davinci-resolve
-        obs-studio
-        prismlauncher
-        asterisk
-    ];
-
-    networking = {
-        hostName = "seffradev";
-        networkmanager.enable = true;
-
-        firewall.enable = true;
-        firewall.allowedTCPPorts = [ 25565 ];
-        firewall.allowedUDPPorts = [ 25565 ];
-    };
-
-    programs = {
-        gamescope = {
-            enable = true;
-            capSysNice = true;
-        };
-
-        steam = {
-            enable = true;
-            remotePlay.openFirewall = true;
-            dedicatedServer.openFirewall = true;
-            localNetworkGameTransfers.openFirewall = true;
-            gamescopeSession.enable = true;
-        };
-    };
-
-    services = {
-        xserver.videoDrivers = [ "nvidia" ];
-    };
-
-    hardware.nvidia = {
-        modesetting.enable = true;
-        open = false;
-        nvidiaSettings = true;
-        package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
+    networking.hostName = "seffradev";
 
     system.stateVersion = "25.05";
 }

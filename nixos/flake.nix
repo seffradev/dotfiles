@@ -22,6 +22,7 @@
         self,
         nixpkgs,
         home-manager,
+        nur,
         ...
     } @inputs: {
         nixosConfigurations = {
@@ -54,6 +55,7 @@
                 system = "x86_64-linux";
 
                 modules = [
+                    nur.modules.nixos.default
                     ./hosts/seffradev
                     ./users/${username}/nixos.nix
 
