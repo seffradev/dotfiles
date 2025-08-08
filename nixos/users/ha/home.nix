@@ -31,15 +31,16 @@
         ../../home/modules/zsh.nix
     ];
 
-    home.shellAliases = {
-        e = "$EDITOR";
-    };
-
     home.sessionVariables = {
+        EDITOR = "nvim";
         PAGER = "bat";
         BROWSER = "firefox";
         TERMINAL = "kitty";
         MANPAGER = "sh -c 'bat -l man -p'";
+    };
+
+    home.shellAliases = {
+        e = "$EDITOR";
     };
 
     editorconfig = {
@@ -57,10 +58,6 @@
     };
 
     programs = {
-        neovim = {
-            defaultEditor = true;
-            vimdiffAlias = true;
-        };
         zsh = {
             initContent = lib.mkBefore ''
                 if [ ! $(tty | grep tty) ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
