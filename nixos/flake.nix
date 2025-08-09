@@ -32,7 +32,7 @@
         ...
     } @inputs: {
         nixosConfigurations = {
-            tpt14g3 = let
+            tpt14-g3 = let
                 username = "ha";
                 specialArgs = {inherit username; inherit inputs;};
             in nixpkgs.lib.nixosSystem {
@@ -40,7 +40,8 @@
                 system = "x86_64-linux";
 
                 modules = [
-                    ./hosts/tpt14g3
+                    nur.modules.nixos.default
+                    ./hosts/tpt14-g3
                     ./users/${username}/nixos.nix
 
                     home-manager.nixosModules.home-manager {
