@@ -15,6 +15,7 @@
         ../../home/modules/email.nix
         ../../home/modules/firefox.nix
         ../../home/modules/games.nix
+        ../../home/modules/gcc.nix
         ../../home/modules/git.nix
         ../../home/modules/keyboard.nix
         ../../home/modules/kitty.nix
