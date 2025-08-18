@@ -32,7 +32,6 @@ return {
                 },
             }
 
-            telescope.load_extension "fzf"
             telescope.load_extension "ui-select"
 
             vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy-find current buffer" })
