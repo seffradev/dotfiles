@@ -5,6 +5,11 @@
         extraGroups = [ "networkmanager" ];
     };
 
+    system.autoUpgrade = {
+        enable = true;
+        allowReboot = true;
+    };
+
     nix.settings = {
         trusted-users = [username];
         experimental-features = [ "nix-command" "flakes" ];
@@ -23,19 +28,9 @@
 
     services.printing.enable = true;
 
-    environment.pathsToLink = [
-        "/share/xdg-desktop-portal"
-        "/share/applications"
-        "/share/zsh"
-    ];
-
-    programs = {
-        nix-ld.enable = true;
-        appimage = {
-            enable = true;
-            binfmt = true;
-        };
-    };
+    services.udev.extraRules = ''
+        KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
+    '';
 
     hardware.graphics.enable = true;
 

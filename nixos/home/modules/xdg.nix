@@ -1,5 +1,5 @@
 { config, pkgs, ... }: let
-    browser = ["firefox.desktop"];
+    browser = ["brave.desktop"];
     audio = ["mpv.desktop"];
     video = ["mpv.desktop"];
     image = ["imv.desktop"];
