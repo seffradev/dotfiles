@@ -8,6 +8,7 @@
         extraGroups = [
             "wheel"
             "docker"
+            "wireshark"
         ];
     };
 }

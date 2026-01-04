@@ -1,47 +1,63 @@
 { pkgs, lib, ... }: {
     imports = [
-        ../../home/modules/clang
-        ../../home/modules/dunst
-        ../../home/modules/gamescope
-        ../../home/modules/hyprland
-        ../../home/modules/nvim
-        ../../home/modules/rofi
-        ../../home/modules/starship
-        ../../home/modules/tmux
-        ../../home/modules/waybar
-        ../../home/modules/audio.nix
-        ../../home/modules/cloud-storage.nix
+        ../../home/modules/browsers/chromium.nix
+        ../../home/modules/browsers/firefox.nix
+        ../../home/modules/cli/documentation.nix
+        ../../home/modules/cli/files.nix
+        ../../home/modules/cli/pager.nix
+        ../../home/modules/cli/presentation.nix
+        ../../home/modules/cli/stats.nix
+        ../../home/modules/cli/web.nix
+        ../../home/modules/cli/zip.nix
+        ../../home/modules/cloud/storage/dropbox.nix
+        ../../home/modules/cloud/storage/pcloud.nix
+        ../../home/modules/communication/discord.nix
+        ../../home/modules/communication/neomutt.nix
         ../../home/modules/core.nix
-        ../../home/modules/email.nix
-        ../../home/modules/firefox.nix
-        ../../home/modules/games.nix
-        ../../home/modules/gcc.nix
-        ../../home/modules/git.nix
-        ../../home/modules/keyboard.nix
-        ../../home/modules/kitty.nix
-        ../../home/modules/media-creation.nix
-        ../../home/modules/music.nix
-        ../../home/modules/neomutt.nix
-        ../../home/modules/networking.nix
-        ../../home/modules/nix.nix
-        ../../home/modules/perf.nix
+        ../../home/modules/creation/audio.nix
+        ../../home/modules/creation/image.nix
+        ../../home/modules/creation/video.nix
+        ../../home/modules/debugging/networking.nix
+        ../../home/modules/development/clang
+        ../../home/modules/development/editors/nvim
+        ../../home/modules/development/editors/vscode.nix
+        ../../home/modules/development/gcc.nix
+        ../../home/modules/development/git.nix
+        ../../home/modules/documents/libreoffice.nix
+        ../../home/modules/documents/zathura.nix
+        ../../home/modules/hardware/keyboard.nix
+        ../../home/modules/kdeconnect.nix
+        ../../home/modules/media/audio.nix
+        ../../home/modules/media/spotify.nix
+        ../../home/modules/media/video.nix
+        ../../home/modules/obsidian.nix
+        ../../home/modules/shells/starship
+        ../../home/modules/shells/tmux
+        ../../home/modules/shells/zsh.nix
         ../../home/modules/ssh.nix
-        ../../home/modules/video.nix
-        ../../home/modules/virtualization.nix
+        ../../home/modules/terminals/kitty.nix
+        ../../home/modules/virtualization/distrobox.nix
+        ../../home/modules/wayland/clipboard.nix
+        ../../home/modules/wayland/dunst
+        ../../home/modules/wayland/hyprland
+        ../../home/modules/wayland/rofi
+        ../../home/modules/wayland/screenshot.nix
         ../../home/modules/xdg.nix
-        ../../home/modules/zsh.nix
     ];
 
     home.sessionVariables = {
         EDITOR = "nvim";
         PAGER = "bat";
-        BROWSER = "firefox";
+        BROWSER = "brave";
         TERMINAL = "kitty";
         MANPAGER = "sh -c 'bat -l man -p'";
+        FZF_BASE = "${pkgs.fzf}/share/fzf";
     };
 
     home.shellAliases = {
         e = "$EDITOR";
+        update = "sudo -E nixos-rebuild switch --flake .";
+        develop = "nix develop --command $SHELL";
     };
 
     editorconfig = {
@@ -66,31 +82,30 @@
                 fi
             '';
         };
-        git = {
-            userName = "Hampus Avekvist";
-            userEmail = "hampus@seffra.dev";
-            extraConfig = {
-                gpg = {
-                    format = "ssh";
-                };
-                "gpg \"ssh\"" = {
-                    program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
-                };
-                commit = {
-                    gpgsign = true;
-                };
-                tag = {
-                    gpgsign = true;
-                };
-                user = {
-                    signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIf0lvauxhZ0c8IeB2Gb1QFGNaacNA9z8c0Y2CJDLIXO";
-                };
-                diff.tool = "nvimdiff";
-                difftool.prompt = false;
-                merge.tool = "nvimdiff";
-                mergetool.prompt = false;
-                "mergetool \"vimdiff\"".layout = "LOCAL,BASE,REMOTE / MERGED";
+        git.settings = {
+            user.name = "Hampus Avekvist";
+            gpg = {
+                format = "ssh";
             };
+            "gpg \"ssh\"" = {
+                program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
+            };
+            commit = {
+                gpgsign = true;
+            };
+            tag = {
+                gpgsign = true;
+            };
+            user = {
+                signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIf0lvauxhZ0c8IeB2Gb1QFGNaacNA9z8c0Y2CJDLIXO";
+            };
+            diff.tool = "nvimdiff";
+            difftool.prompt = false;
+            merge.tool = "nvimdiff";
+            mergetool.prompt = false;
+            "mergetool \"vimdiff\"".layout = "LOCAL,BASE,REMOTE / MERGED";
+            "mergetool \"vimdiff\"".prompt = false;
+            "includeIf \"gitdir:~/projects/\"".path = "~/projects/.gitconfig";
         };
     };
 }
