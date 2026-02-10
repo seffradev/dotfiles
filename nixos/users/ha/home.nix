@@ -2,6 +2,7 @@
     imports = [
         ../../home/modules/browsers/chromium.nix
         ../../home/modules/browsers/firefox.nix
+        ../../home/modules/cli/bluetooth.nix
         ../../home/modules/cli/documentation.nix
         ../../home/modules/cli/files.nix
         ../../home/modules/cli/pager.nix

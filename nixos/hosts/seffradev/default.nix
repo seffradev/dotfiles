@@ -3,6 +3,7 @@
         ../../modules/audio.nix
         ../../modules/environment/link-paths.nix
         ../../modules/graphics/nvidia.nix
+        ../../modules/hardware/bluetooth.nix
         ../../modules/layout/us-mac.nix
         ../../modules/locale/fonts.nix
         ../../modules/locale/sv_SE.nix
