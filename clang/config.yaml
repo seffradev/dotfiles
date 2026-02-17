@@ -1,0 +1,5 @@
+CompileFlags:
+  Add: [-xc++, -Wall, -Wextra, -Werror, -std=c++23]
+  Compiler: clang++
+Index:
+  Background: Build
