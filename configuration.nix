@@ -20,6 +20,11 @@
     ];
   };
 
+  # stylix = {
+  #     enable = true;
+  #     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark.yaml";
+  # };
+
   programs = {
     virt-manager.enable = true;
     zsh.enable = true;
