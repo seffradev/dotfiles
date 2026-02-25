@@ -279,6 +279,12 @@ in
     };
   };
 
+  stylix = {
+    targets = {
+      firefox.profileNames = [ "ha" ];
+    };
+  };
+
   programs = {
     pandoc = {
       enable = true;
@@ -355,8 +361,8 @@ in
     kitty = {
       enable = true;
       font = {
-        size = 16.0;
-        name = "JetBrainsMono Nerd Font";
+        size = lib.mkForce 16.0;
+        name = lib.mkForce "JetBrainsMono Nerd Font";
       };
       extraConfig = ''
         bold_font "JetBrainsMono Nerd Font Bold"
@@ -784,8 +790,8 @@ in
             gaps_out = 0;
             gaps_workspaces = 0;
             border_size = 0;
-            "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-            "col.inactive_border" = "rgba(595959aa)";
+            # "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+            # "col.inactive_border" = "rgba(595959aa)";
             resize_on_border = true;
             allow_tearing = false;
             layout = "dwindle";
