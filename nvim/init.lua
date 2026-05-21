@@ -218,6 +218,9 @@ vim.lsp.config("harper_ls", {})
 vim.lsp.config("clangd", {})
 vim.lsp.enable("clangd")
 
+vim.lsp.config("cmake", {})
+vim.lsp.enable("cmake")
+
 vim.lsp.config("just-lsp", {})
 vim.lsp.enable("just-lsp")
 

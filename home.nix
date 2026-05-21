@@ -131,6 +131,7 @@ in
       tinymist
       pyright
       ruff
+      cmake-language-server
 
       tracy
       samply
