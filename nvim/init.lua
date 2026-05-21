@@ -23,77 +23,39 @@ vim.opt.undofile = true
 vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 
-local github = function(identifier)
+local github = function (identifier)
     return "https://github.com/" .. identifier
 end
 
 vim.pack.add({
     {
         src = github("saghen/blink.cmp"),
-        version = vim.version.range("1.0"),
+        version = vim.version.range("1.0")
     },
     github("nvim-lua/plenary.nvim"),
-    github("folke/lazydev.nvim"),
-    github("folke/twilight.nvim"),
-    github("folke/zen-mode.nvim"),
-    github("rafamadriz/friendly-snippets"),
     github("tpope/vim-fugitive"),
-    github("ThePrimeagen/git-worktree.nvim"),
-    {
-        src = github("ThePrimeagen/harpoon"),
-        version = "harpoon2",
-    },
-    github("seffradev/telescope.nvim"),
+    github("nvim-telescope/telescope.nvim"),
     github("nvim-telescope/telescope-fzf-native.nvim"),
     github("nvim-telescope/telescope-ui-select.nvim"),
-    github("kdheepak/lazygit.nvim"),
     github("neovim/nvim-lspconfig"),
-    github("echasnovski/mini.nvim"),
-    github("nvim-neorg/neorg"),
-    github("mfussenegger/nvim-dap"),
-    github("rcarriga/nvim-dap-ui"),
+    github("nvim-mini/mini.nvim"),
     github("nvim-neotest/nvim-nio"),
-    github("theHamsta/nvim-dap-virtual-text"),
-    github("folke/snacks.nvim"),
     github("seffradev/midnight.nvim"),
     github("nvim-treesitter/nvim-treesitter"),
-    github("nvim-treesitter/nvim-treesitter-textobjects"),
     github("mbbill/undotree"),
     github("christoomey/vim-tmux-navigator"),
-    github("nvim-tree/nvim-web-devicons"),
+    github("nvim-tree/nvim-web-devicons")
 })
 
 vim.cmd.colorscheme "midnight"
 
 local telescope = require("telescope")
-telescope.load_extension("git_worktree")
-worktree = telescope.extensions.git_worktree
-
-local harpoon = require "harpoon"
-harpoon:setup {}
 
 local statusline = require "mini.statusline"
 statusline.setup { use_icons = true }
 
-local conf = require "telescope.config".values
-local function toggle_telescope(harpoon_files)
-    local file_paths = {}
-    for _, item in ipairs(harpoon_files.items) do
-        table.insert(file_paths, item.value)
-    end
-
-    require "telescope.pickers".new({}, {
-        prompt_title = "Harpoon",
-        finder = require "telescope.finders".new_table {
-            results = file_paths,
-        },
-        previewer = conf.file_previewer {},
-        sorter = conf.generic_sorter {},
-    }):find()
-end
-
 vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(args)
+    callback = function (args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if not client then
             print("No client could be connected")
@@ -103,83 +65,35 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = false })
         vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = args.buf,
-            callback = function()
+            callback = function ()
                 vim.lsp.buf.format({
                     bufnr = args.buf,
-                    id = client.id,
+                    id = client.id
                 })
-            end,
+            end
         })
-    end,
+    end
 })
 
 -- Highlight when yanking text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
+-- Try it with `yap` in normal mode
+-- See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd("TextYankPost", {
     desc = "Highlight when yanking text",
     group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
-    callback = function()
+    callback = function ()
         vim.highlight.on_yank()
-    end,
+    end
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-    callback = function()
+    callback = function ()
         -- Enable treesitter highlighting and disable regex syntax
         pcall(vim.treesitter.start)
         -- Enable treesitter-based indentation
         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    end,
+    end
 })
-
-local dap = require("dap")
-local dap_ui = require("dapui")
-local dap_virtual_text = require("nvim-dap-virtual-text")
-
-dap_virtual_text.setup()
-
-dap.configurations.cpp = {
-    {
-        name = "Launch file",
-        type = "cppdbg",
-        request = "launch",
-        program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-        cwd = '${workspaceFolder}',
-        stopAtEntry = true,
-    },
-    {
-        name = 'Attach to gdbserver :1234',
-        type = 'cppdbg',
-        request = 'launch',
-        MIMode = 'gdb',
-        miDebuggerServerAddress = 'localhost:1234',
-        cwd = '${workspaceFolder}',
-        program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-    },
-}
-
-dap_ui.setup()
-
-dap.listeners.before.attach.dapui_config = function()
-    dap_ui.open()
-end
-
-dap.listeners.before.launch.dapui_config = function()
-    dap_ui.open()
-end
-
-dap.listeners.before.event_terminated.dapui_config = function()
-    dap_ui.close()
-end
-
-dap.listeners.before.event_exited.dapui_config = function()
-    dap_ui.close()
-end
 
 local telescope_builtin = require "telescope.builtin"
 
@@ -188,14 +102,14 @@ telescope.setup {
         theme = "dropdown",
         sorting_strategy = "ascending",
         layout_strategy = "flex",
-        border = true,
+        border = true
     },
     extensions = {
         fzf = {},
         ["ui-select"] = {
             require("telescope.themes").get_dropdown {}
-        },
-    },
+        }
+    }
 }
 
 telescope.load_extension "ui-select"
@@ -206,118 +120,36 @@ treesitter_configs.setup {
     ensure_installed = {
         "query",
         "vim",
-        "vimdoc",
+        "vimdoc"
     },
-
     sync_install = false,
     auto_install = false,
     ignore_install = {},
     modules = {},
-
     highlight = {
         enable = true,
-
-        disable = function(_, buf)
+        disable = function (_, buf)
             local max_filesize = 100 * 1024 -- 100 KB
             local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then
                 return true
             end
         end,
-
-        additional_vim_regex_highlighting = false,
+        additional_vim_regex_highlighting = false
     }
 }
-
-require "nvim-treesitter".setup {
-    textobjects = {
-        select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-            },
-            include_surrounding_whitespace = true,
-        },
-        swap = {
-            enable = true,
-            swap_next = {
-                ["<leader>a"] = "@parameter.inner",
-            },
-            swap_previous = {
-                ["<leader>A"] = "@parameter.inner",
-            },
-        },
-        move = {
-            enable = true,
-            set_jumps = true,
-            goto_next_start = {
-                ["]m"] = "@function.outer",
-                ["]]"] = "@class.outer",
-            },
-            goto_next_end = {
-                ["]M"] = "@function.outer",
-                ["]["] = "@class.outer",
-            },
-            goto_previous_start = {
-                ["[m"] = "@function.outer",
-                ["[["] = "@class.outer",
-            },
-            goto_previous_end = {
-                ["[M"] = "@function.outer",
-                ["[]"] = "@class.outer",
-            },
-            goto_next = {
-                ["]c"] = "@conditional.outer",
-            },
-            goto_previous = {
-                ["[c"] = "@conditional.outer",
-            },
-        },
-    }
-}
-
-local ts_repeat_move = require "nvim-treesitter-textobjects.repeatable_move"
-
-local toggle = function()
-    require "zen-mode".toggle {
-        window = {
-            width = 80,
-            options = {
-                signcolumn = "no",
-                number = false,
-                relativenumber = false,
-                cursorline = false,
-                cursorcolumn = false,
-                foldcolumn = "0",
-                list = false,
-            },
-        },
-        plugins = {
-            tmux = {
-                enabled = true,
-            },
-            kitty = {
-                enabled = true,
-            },
-        },
-    }
-end
 
 local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local make_entry = require "telescope.make_entry"
 local conf = require "telescope.config".values
 
-local live_multigrep = function(opts)
+local live_multigrep = function (opts)
     opts = opts or {}
     opts.cwd = opts.cwd or vim.uv.cwd()
 
     local finder = finders.new_async_job {
-        command_generator = function(prompt)
+        command_generator = function (prompt)
             if not prompt or prompt == "" then
                 return nil
             end
@@ -342,12 +174,12 @@ local live_multigrep = function(opts)
                     "--with-filename",
                     "--line-number",
                     "--column",
-                    "--smart-case",
-                },
+                    "--smart-case"
+                }
             }
         end,
         entry_maker = make_entry.gen_from_vimgrep(opts),
-        cwd = opts.cwd,
+        cwd = opts.cwd
     }
 
     pickers.new(opts, {
@@ -355,7 +187,7 @@ local live_multigrep = function(opts)
         prompt_title = "Live grep",
         finder = finder,
         previewer = conf.grep_previewer(opts),
-        sorter = require "telescope.sorters".empty(),
+        sorter = require "telescope.sorters".empty()
     }):find()
 end
 
@@ -378,7 +210,7 @@ vim.lsp.enable("emmylua_ls")
 vim.lsp.config("emmylua_ls", {
     cmd = { "emmylua_ls" },
     filetypes = { "lua" },
-    root_markers = { ".emmyrc.json", ".luarc.json", ".git" },
+    root_markers = { ".emmyrc.json", ".luarc.json", ".git" }
 })
 
 vim.lsp.config("tinymist", {})
@@ -394,16 +226,16 @@ vim.lsp.enable("pyright")
 vim.lsp.config("pyright", {
     settings = {
         pyright = {
-            disableOrganizeImports = true,
+            disableOrganizeImports = true
         },
         python = {
             analysis = {
                 ignore = {
-                    "*",
-                },
-            },
-        },
-    },
+                    "*"
+                }
+            }
+        }
+    }
 })
 
 require "nvim-treesitter".setup {
@@ -418,22 +250,9 @@ require "nvim-treesitter".setup {
         "nix",
         "python",
         "rust",
-        "typst",
-    },
+        "typst"
+    }
 }
-
--- local sonarlint = require "sonarlint"
--- sonarlint.setup {
---   server = {
---     cmd = {
---       'sonarlint-ls',
---       '-stdio',
---     },
---   },
---   filetypes = {
---     'cpp',
---   }
--- }
 
 vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>", { desc = "Source current file" })
 vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Source current line" })
@@ -449,8 +268,9 @@ vim.keymap.set("n", "N", "Nzzzv", { desc = "Move to previous match" })
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line below" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up" })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down" })
-vim.keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>",
-    { desc = "Substitute word under cursor" })
+vim
+    .keymap
+    .set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", { desc = "Substitute word under cursor" })
 
 vim.keymap.set("n", "<leader>gs", "<cmd>Git<CR>", { desc = "Git status" })
 vim.keymap.set("n", "<leader>lg", "<cmd>LazyGit<CR>", { desc = "LazyGit" })
@@ -459,34 +279,6 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
 vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
-
-vim.keymap.set("n", "<leader>wtc", function()
-    worktree.create_git_worktree()
-end, { desc = "Create Git Worktree" })
-
-vim.keymap.set("n", "<leader>wts", function()
-    worktree.git_worktrees()
-end, { desc = "Switch Git Work tree" })
-
-vim.keymap.set("n", "<leader><C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open Harpoon window" })
-vim.keymap.set("n", "<leader>h", function() harpoon:list():add() end, { desc = "Add current file to Harpoon list" })
-vim.keymap.set("n", "<leader>H", function() harpoon:list():select(1) end, { desc = "Switch to first Harpoon entry" })
-vim.keymap.set("n", "<leader>T", function() harpoon:list():select(2) end, { desc = "Switch to second Harpoon entry" })
-vim.keymap.set("n", "<leader>N", function() harpoon:list():select(3) end, { desc = "Switch to third Harpoon entry" })
-vim.keymap.set("n", "<leader>S", function() harpoon:list():select(4) end, { desc = "Switch to fourth Harpoon entry" })
-vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
-    { desc = "Open Harpoon quick menu" })
-
-vim.keymap.set("n", "<leader>dt", function() dap.toggle_breakpoint() end, { desc = "Toggle breakpoint on current line" })
-vim.keymap.set("n", "<leader>dc", function() dap.continue() end, { desc = "Continue debugging" })
-vim.keymap.set("n", "<leader>di", function() dap.step_into() end, { desc = "Step into" })
-vim.keymap.set("n", "<leader>do", function() dap.step_over() end, { desc = "Step over" })
-vim.keymap.set("n", "<leader>du", function() dap.step_out() end, { desc = "Step out" })
-vim.keymap.set("n", "<leader>dr", function() dap.repl.open() end, { desc = "Open REPL" })
-vim.keymap.set("n", "<leader>dl", function() dap.run_last() end, { desc = "Run last" })
-vim.keymap.set("n", "<leader>dq", function() dap.terminate() end, { desc = "Terminate debugging" })
-vim.keymap.set("n", "<leader>db", function() dap.list_breakpoints() end, { desc = "List all breakpoints" })
-vim.keymap.set("n", "<leader>de", function() dap.set_exception_breakpoints() end, { desc = "Set exception breakpoints" })
 
 vim.keymap.set("n", "<leader>/", telescope_builtin.current_buffer_fuzzy_find, { desc = "Fuzzy-find current buffer" })
 vim.keymap.set("n", "<leader>gf", telescope_builtin.git_files, { desc = "Search git files" })
@@ -502,46 +294,25 @@ vim.keymap.set("n", "<leader>fR", telescope_builtin.resume, { desc = "Resume las
 vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers, { desc = "Search open buffers" })
 vim.keymap.set("n", "<leader>fc", telescope_builtin.command_history, { desc = "Search command history" })
 
-vim.keymap.set("n", "<leader>en", function()
-    telescope_builtin.find_files {
-        cwd = vim.fn.stdpath("config")
-    }
-end, { desc = "Edit Neovim configuration" })
+vim.keymap.set("n", "<leader>en", function ()
+    telescope_builtin.find_files { cwd = vim.fn.stdpath("config") }
+end, { desc = "Edit Neovim configuration" }
+)
 
-vim.keymap.set("n", "<leader>ep", function()
-    telescope_builtin.find_files {
-        cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy")
-    }
-end, { desc = "Search files from Neovim packages" })
+vim.keymap.set("n", "<leader>ep", function ()
+    telescope_builtin.find_files { cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") }
+end, { desc = "Search files from Neovim packages" }
+)
 
-vim.keymap.set("n", "<leader>fg", function()
-    telescope_builtin.grep_string {
-        search = vim.fn.input "grep: ",
-        hidden = false,
-    }
-end, { desc = "Grep files in current working directory" })
+vim.keymap.set("n", "<leader>fg", function ()
+    telescope_builtin.grep_string { search = vim.fn.input "grep: ", hidden = false }
+end, { desc = "Grep files in current working directory" }
+)
 
-vim.keymap.set("n", "<leader>fG", function()
-    telescope_builtin.grep_string {
-        search = vim.fn.input "grep (hidden): ",
-        hidden = true,
-    }
-end, { desc = "Grep files (inclusive hidden) in current working directory" })
-
--- Repeat movement with ; and ,
--- ensure ';' goes forward and ',' goes backward regardless of the last direction
-vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
-vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
-
--- vim way: ';' goes to the direction you were moving.
--- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
--- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
-
--- Optionally, make builtin f, F, t, T also repeatable with ';' and ','
-vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
+vim.keymap.set("n", "<leader>fG", function ()
+    telescope_builtin.grep_string { search = vim.fn.input "grep (hidden): ", hidden = true }
+end, { desc = "Grep files (inclusive hidden) in current working directory" }
+)
 
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = "Toggle Undotree view" })
 
@@ -551,6 +322,7 @@ vim.keymap.set('n', '<C-k>', "<cmd>TmuxNavigateUp<CR>")
 vim.keymap.set('n', '<C-l>', "<cmd>TmuxNavigateRight<CR>")
 vim.keymap.set('n', '<C-\\>', "<cmd>TmuxNavigatePrevious<CR>")
 
-vim.keymap.set("n", "<leader>zm", toggle, { desc = "Toggle Zen Mode" })
-
-vim.keymap.set("n", "<leader>fl", function() live_multigrep(opts) end, { desc = "Live multigrep" })
+vim.keymap.set("n", "<leader>fl", function ()
+    live_multigrep(opts)
+end, { desc = "Live multigrep" }
+)
