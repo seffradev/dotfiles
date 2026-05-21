@@ -160,7 +160,7 @@ treesitter_configs.setup {
 local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local make_entry = require "telescope.make_entry"
-local conf = require "telescope.config".values
+local telescope_config = require "telescope.config".values
 
 local live_multigrep = function (opts)
     opts = opts or {}
@@ -204,7 +204,7 @@ local live_multigrep = function (opts)
         debounce = 100,
         prompt_title = "Live grep",
         finder = finder,
-        previewer = conf.grep_previewer(opts),
+        previewer = telescope_config.grep_previewer(opts),
         sorter = require "telescope.sorters".empty()
     }):find()
 end
@@ -288,15 +288,11 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up" })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down" })
 vim
     .keymap
-    .set(
-        "n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>",
-        {
-            desc = "Substitute word under cursor"
-        }
-    )
+    .set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", {
+        desc = "Substitute word under cursor"
+    })
 
 vim.keymap.set("n", "<leader>gs", "<cmd>Git<CR>", { desc = "Git status" })
-vim.keymap.set("n", "<leader>lg", "<cmd>LazyGit<CR>", { desc = "LazyGit" })
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
