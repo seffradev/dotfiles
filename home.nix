@@ -132,6 +132,7 @@ in
       pyright
       ruff
       cmake-language-server
+      tree-sitter
 
       tracy
       samply

@@ -136,12 +136,23 @@ local treesitter_configs = require "nvim-treesitter"
 
 treesitter_configs.setup {
     ensure_installed = {
+        "c",
+        "cpp",
+        "just",
+        "latex",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "nix",
+        "python",
         "query",
+        "rust",
+        "typst",
         "vim",
         "vimdoc"
     },
-    sync_install = false,
-    auto_install = false,
+    sync_install = true,
+    auto_install = true,
     ignore_install = {},
     modules = {},
     highlight = {
@@ -258,22 +269,6 @@ vim.lsp.config("pyright", {
         }
     }
 })
-
-require "nvim-treesitter".setup {
-    ensure_installed = {
-        "c",
-        "cpp",
-        "just",
-        "latex",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "nix",
-        "python",
-        "rust",
-        "typst"
-    }
-}
 
 vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>", { desc = "Source current file" })
 vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Source current line" })
