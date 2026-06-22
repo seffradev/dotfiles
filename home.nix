@@ -167,6 +167,8 @@ in
 
       typst
 
+      simple-scan
+
       (writeShellScriptBin "sniff" ''
         set -x
         FILTER="''${@:2}"
