@@ -546,6 +546,12 @@ in
       enableDefaultConfig = false;
 
       matchBlocks = {
+        debian-8gb-hel1-1 = {
+          hostname = "37.27.43.126";
+          user = "root";
+          port = 22;
+        };
+
         seffradev = lib.hm.dag.entryAfter [ "*" ] {
           hostname = "10.10.10.112";
           user = "ha";
