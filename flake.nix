@@ -25,6 +25,11 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -35,6 +40,7 @@
       nur,
       minimal-tmux,
       stylix,
+      zen-browser,
       ...
     }@inputs:
     {

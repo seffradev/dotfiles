@@ -268,6 +268,15 @@
       "/share/zsh"
     ];
 
+    etc = {
+      "1password/custom_allowed_browsers" = {
+        text = ''
+          zen
+        '';
+        mode = "0755";
+      };
+    };
+
     variables.XDG_RUNTIME_DIR = "/run/user/$UID";
 
     systemPackages = with pkgs; [
