@@ -12,6 +12,34 @@ let
   image = [ "imv.desktop" ];
   document = [ "org.pwmt.zathura.desktop" ];
   editor = [ "nvim.desktop" ];
+
+  firefox-extension = shortId: guid: {
+    name = guid;
+    value = {
+      install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/${shortId}/latest.xpi";
+      installation_mode = "normal_installed";
+    };
+  };
+
+  firefox-prefs = {
+    "extensions.autoDisableScopes" = 0;
+    "extensions.pocket.enabled" = false;
+    "dom.security.https_only_mode" = true;
+    "browser.download.panel.shown" = true;
+    "identity.fxaccounts.enabled" = false;
+    "signon.rememberSignons" = false;
+    "privacy.resistFingerprinting" = false;
+  };
+
+  firefox-extensions = [
+    # To add additional extensions, find it on addons.mozilla.org, find
+    # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)
+    # Then go to https://addons.mozilla.org/api/v5/addons/addon/!SHORT_ID!/ to get the guid
+    (firefox-extension "ublock-origin" "uBlock0@raymondhill.net")
+    (firefox-extension "vimium-c" "vimium-c@gdh1995.cn")
+    (firefox-extension "istilldontcareaboutcookies" "idcac-pub@guus.ninja")
+    (firefox-extension "1password-x-password-manager" "{d634138d-c276-4fc8-924b-40a0ea21d284}")
+  ];
 in
 {
   xresources.properties = {
@@ -174,6 +202,53 @@ in
         FILTER="''${@:2}"
         ssh $1 -T "tshark -w - $FILTER" | wireshark -k -i -
       '')
+
+      (pkgs.wrapFirefox
+        inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser-unwrapped
+        {
+          extraPrefs = lib.concatLines (
+            lib.mapAttrsToList (
+              name: value: "lockPref(${lib.strings.toJSON name}, ${lib.strings.toJSON value});"
+            ) firefox-prefs
+          );
+
+          extraPolicies = {
+            DisableTelemetry = true;
+            ExtensionSettings = builtins.listToAttrs firefox-extensions;
+            DefaultDownloadDirectory = "${config.xdg.userDirs.download}";
+
+            SearchEngines = {
+              Default = "ddg";
+              Add = [
+                {
+                  Name = "nixpkgs packages";
+                  URLTemplate = "https://search.nixos.org/packages?query={searchTerms}";
+                  IconURL = "https://wiki.nixos.org/favicon.ico";
+                  Alias = "@np";
+                }
+                {
+                  Name = "NixOS options";
+                  URLTemplate = "https://search.nixos.org/options?query={searchTerms}";
+                  IconURL = "https://wiki.nixos.org/favicon.ico";
+                  Alias = "@no";
+                }
+                {
+                  Name = "NixOS Wiki";
+                  URLTemplate = "https://wiki.nixos.org/w/index.php?search={searchTerms}";
+                  IconURL = "https://wiki.nixos.org/favicon.ico";
+                  Alias = "@nw";
+                }
+                {
+                  Name = "noogle";
+                  URLTemplate = "https://noogle.dev/q?term={searchTerms}";
+                  IconURL = "https://noogle.dev/favicon.ico";
+                  Alias = "@ng";
+                }
+              ];
+            };
+          };
+        }
+      )
     ];
 
     file = {
@@ -331,7 +406,7 @@ in
     };
 
     firefox = {
-      enable = true;
+      enable = false;
       profiles.ha = {
         name = "Hampus Avekvist";
         search.force = true;
