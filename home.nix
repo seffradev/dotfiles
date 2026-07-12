@@ -729,7 +729,6 @@ in
           "$textClipboard" = "wl-paste --type text --watch cliphist store";
           "$imageClipboard" = "wl-paste --type image --watch cliphist store";
           "$bar" = "waybar";
-          "$barStart" = "$bar && pkill -SIGUSR1 $bar";
           "$wallpaper" = "hyprpaper";
           "$password" = "1password";
           "$notifications" = "dunst";
@@ -748,7 +747,7 @@ in
             "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
           ];
           exec-once = [
-            "$barStart"
+            "$bar"
             "$terminal"
             "$wallpaper"
             "$polkit"
@@ -807,9 +806,6 @@ in
               ]
             ) 9
           ));
-          bindr = [
-            "$mod, B, exec, pkill -SIGUSR1 $bar"
-          ];
           bindm = [
             "$mod, mouse:272, movewindow"
             "$mod, mouse:273, resizewindow"
