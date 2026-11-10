@@ -91,8 +91,6 @@ in
     };
 
     packages = with pkgs; [
-      aseprite
-
       python3
       grim
       slurp
@@ -121,7 +119,6 @@ in
 
       obsidian
 
-      vlc
       imv
 
       abcde
@@ -131,10 +128,6 @@ in
       picard
       playerctl
       pulsemixer
-
-      keymapp
-
-      prismlauncher
 
       zathura
 
@@ -147,7 +140,6 @@ in
       glab
       lazygit
       onefetch
-      gcc15
       gnumake
       neovim
       harper
@@ -165,18 +157,11 @@ in
       git-filter-repo
 
       tracy
-      samply
       termshark
       wireshark
 
-      davinci-resolve
-      obs-studio
-      inkscape
-      audacity
-
       discord
 
-      dropbox
       pcloud
 
       bluetuith
@@ -188,7 +173,6 @@ in
       ripgrep
       yazi
       just
-      presenterm
       btop
       cloc
       yq
