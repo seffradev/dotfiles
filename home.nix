@@ -126,6 +126,7 @@ in
 
       abcde
       amberol
+      spotify
       pavucontrol
       picard
       playerctl
@@ -740,7 +741,7 @@ in
           "$notifications" = "dunst";
           "$notes" = "obsidian";
           "$chat" = "discord";
-          "$music" = "amberol";
+          "$music" = "spotify";
           "$polkit" = "systemctl --user start hyprpolkitagent";
           "$idle" = "hypridle";
           "$screenshot" = "slurp | grim -g - - | wl-copy";
