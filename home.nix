@@ -161,6 +161,7 @@ in
       ruff
       cmake-language-server
       tree-sitter
+      git-filter-repo
 
       tracy
       samply
@@ -539,6 +540,10 @@ in
         if [ ! $(tty | grep tty) ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
             exec tmux new -As 0
         fi
+
+        if [[ -n "$CONTAINER_ID" ]] && ! command -v fzf >/dev/null; then
+          path+=(/run/host/etc/profiles/per-user/$USER/bin /run/host/run/current-system/sw/bin)
+        fi
       '';
     };
 
@@ -587,6 +592,7 @@ in
         };
         rebase = {
           updateRefs = true;
+          autosquash = true;
         };
         gpg = {
           format = "ssh";
