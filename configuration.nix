@@ -280,6 +280,7 @@
     variables.XDG_RUNTIME_DIR = "/run/user/$UID";
 
     systemPackages = with pkgs; [
+      vimPlugins.blink-cmp
       vimPlugins.fzf-wrapper
       vimPlugins.nvim-treesitter
       curl

@@ -23,6 +23,8 @@ vim.opt.undofile = true
 vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 
+vim.o.winborder = "rounded"
+
 local github = function (identifier)
     return "https://github.com/" .. identifier
 end
@@ -64,14 +66,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         if client:supports_method('textDocument/implementation') then
             -- Create a keymap for vim.lsp.buf.implementation ...
-        end
-
-        if client:supports_method('textDocument/completion') then
-            -- Optional: trigger autocompletion on EVERY keypress. May be slow!
-            -- local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
-            -- client.server_capabilities.completionProvider.triggerCharacters = chars
-
-            vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
         end
 
         -- Auto-format ("lint") on save.
@@ -220,6 +214,38 @@ local live_multigrep = function (opts)
     }):find()
 end
 
+local blink = require "blink.cmp"
+
+blink.setup {
+    keymap = {
+        -- <C-n>/<C-p> or Up/Down to select, <C-y> to accept,
+        -- <C-space> to open the menu or docs, <C-e> to close
+        preset = "default"
+    },
+    completion = {
+        list = {
+            selection = {
+                preselect = true,   -- Nothing highlighted when the menu opens
+                auto_insert = false -- Moving through items doesn't insert them
+            }
+        },
+        documentation = {
+            auto_show = true,
+            auto_show_delay_ms = 300
+        }
+    },
+    sources = {
+        default = { "lsp", "path", "snippets", "buffer" }
+    },
+    fuzzy = {
+        -- uses the Rust matcher if it loads, otherwise falls back to Lua with a warning
+        implementation = "prefer_rust_with_warning"
+    }
+}
+
+vim.lsp.config("*", {
+    capabilities = blink.get_lsp_capabilities()
+})
 vim.lsp.enable("typos_lsp")
 vim.lsp.config("typos_lsp", {})
 
