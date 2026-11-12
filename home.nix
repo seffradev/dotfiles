@@ -545,7 +545,7 @@ in
         tmuxPlugins.yank
         tmuxPlugins.sensible
         tmuxPlugins.vim-tmux-navigator
-        { plugin = inputs.minimal-tmux.packages.${pkgs.system}.default; }
+        { plugin = inputs.minimal-tmux.packages.${pkgs.stdenv.hostPlatform.system}.default; }
       ];
       extraConfig = ''
         bind-key -T copy-mode-vi v send-keys -X begin-selection
@@ -611,17 +611,25 @@ in
       enable = true;
       enableDefaultConfig = false;
 
-      matchBlocks = {
+      settings = {
         debian-8gb-hel1-1 = {
-          hostname = "37.27.43.126";
-          user = "root";
-          port = 22;
+          header = "Host debian-8gb-hel1-1 debian-8gb-hel1-1-tmux";
+          HostName = "37.27.43.126";
+          User = "root";
+          Port = 22;
         };
 
-        seffradev = lib.hm.dag.entryAfter [ "*" ] {
-          hostname = "10.10.10.112";
-          user = "ha";
-          port = 22;
+        seffradev = {
+          header = "Host seffradev seffradev-tmux";
+          HostName = "10.10.10.112";
+          User = "ha";
+          Port = 22;
+        };
+
+        tmux = lib.hm.dag.entryAfter [ "seffradev" "debian-8gb-hel1-1" ] {
+          header = "Host *-tmux";
+          RequestTTY = "yes";
+          RemoteCommand = "command -v tmux >/dev/null 2>&1 && exec tmux new-session -A -s main || exec $SHELL -l";
         };
 
         "*" =
@@ -630,10 +638,12 @@ in
               "seffradev"
               "skutt"
               "skutt-filter"
+              "debian-8gb-hel1-1"
+              "tmux"
             ]
             {
-              identityAgent = "~/.1password/agent.sock";
-              setEnv = {
+              IdentityAgent = "~/.1password/agent.sock";
+              SetEnv = {
                 TERM = "xterm-256color";
               };
             };
