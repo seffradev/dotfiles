@@ -184,7 +184,6 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      jack.enable = true;
     };
 
     printing.enable = true;
@@ -285,6 +284,7 @@
       vimPlugins.nvim-treesitter
       curl
       dnsmasq
+      pipewire.jack
     ];
   };
 
