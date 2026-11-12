@@ -25,6 +25,13 @@ vim.opt.signcolumn = "yes"
 
 vim.o.winborder = "rounded"
 
+-- When started in a Godot project, listen on a fixed pipe so the Godot
+-- editor can open scripts in this Neovim instance (see "External Editor"
+-- in Godot's Editor Settings).
+if vim.uv.fs_stat(vim.fs.joinpath(vim.uv.cwd(), "project.godot")) then
+    pcall(vim.fn.serverstart, "/tmp/godot.pipe")
+end
+
 local github = function (identifier)
     return "https://github.com/" .. identifier
 end
@@ -107,6 +114,14 @@ vim.api.nvim_create_autocmd('FileType', {
     end
 })
 
+-- GDScript is indented with tabs (Godot's and gdformat's default)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "gdscript", "gdshader" },
+    callback = function ()
+        vim.bo.expandtab = false
+    end
+})
+
 local telescope_builtin = require "telescope.builtin"
 
 telescope.setup {
@@ -132,6 +147,9 @@ treesitter_configs.setup {
     ensure_installed = {
         "c",
         "cpp",
+        "gdscript",
+        "gdshader",
+        "godot_resource",
         "just",
         "latex",
         "lua",
@@ -295,6 +313,11 @@ vim.lsp.config("pyright", {
         }
     }
 })
+
+-- Served by the running Godot editor on 127.0.0.1:6005
+-- (start it with `just edit` or `godot --editor --headless --path .`)
+vim.lsp.config("gdscript", {})
+vim.lsp.enable("gdscript")
 
 vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>", { desc = "Source current file" })
 vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Source current line" })
