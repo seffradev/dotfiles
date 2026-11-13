@@ -576,7 +576,6 @@ in
         init = {
           defaultBranch = "main";
         };
-        merge.ff = true;
         rerere = {
           enabled = true;
         };
@@ -608,7 +607,11 @@ in
         };
         diff.tool = "nvimdiff";
         difftool.prompt = false;
-        merge.tool = "nvimdiff";
+        merge = {
+          ff = true;
+          tool = "nvimdiff";
+          conflictStyle = "zdiff3";
+        };
         mergetool.prompt = false;
         "mergetool \"vimdiff\"".layout = "LOCAL,BASE,REMOTE / MERGED";
         "mergetool \"vimdiff\"".prompt = false;
