@@ -48,7 +48,22 @@
     virt-manager.enable = true;
     zsh.enable = true;
 
-    nix-ld.enable = true;
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        libX11
+        libXcursor
+        libXext
+        libXinerama
+        libXrandr
+        libXrender
+        libXi
+        libGL
+        mono
+        alsa-lib
+        libpulseaudio
+      ];
+    };
 
     appimage = {
       enable = true;

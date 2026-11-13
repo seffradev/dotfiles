@@ -53,10 +53,17 @@ vim.pack.add({
     github("nvim-treesitter/nvim-treesitter"),
     github("mbbill/undotree"),
     github("christoomey/vim-tmux-navigator"),
-    github("nvim-tree/nvim-web-devicons")
+    github("nvim-tree/nvim-web-devicons"),
+    github("mfussenegger/nvim-dap"),
+    github("mfussenegger/nvim-dap-python"),
+    github("rcarriga/nvim-dap-ui")
 })
 
 vim.cmd.colorscheme "midnight"
+
+local python_dap = require "dap-python"
+python_dap.setup("python3")
+python_dap.test_runner = 'pytest'
 
 local telescope = require("telescope")
 

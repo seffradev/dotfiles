@@ -83,6 +83,7 @@ in
     sessionVariables = {
       EDITOR = "nvim";
       PAGER = "bat";
+      GIT_PAGER = "less";
       BROWSER = "zen";
       TERMINAL = "kitty";
       MANPAGER = "sh -c 'bat -l man -p'";
@@ -155,6 +156,7 @@ in
       cmake-language-server
       tree-sitter
       git-filter-repo
+      delta
 
       tracy
       termshark
@@ -563,6 +565,12 @@ in
     git = {
       enable = true;
       settings = {
+        core.pager = "delta";
+        interactive.diffFilter = "delta --color-only";
+        delta = {
+          navigate = true;
+          dark = true;
+        };
         user.name = "Hampus Avekvist";
         "includeIf \"gitdir:~/projects/\"".path = "~/projects/.gitconfig";
         init = {
